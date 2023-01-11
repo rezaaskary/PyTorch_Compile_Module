@@ -5,6 +5,22 @@ import functools
 import numpy as np
 from torch.utils.data import TensorDataset, DataLoader
 
+[nn.L1Loss, nn.MSELoss, nn.CrossEntropyLoss, nn.CTCLoss, nn.NLLLoss,
+ nn.PoissonNLLLoss, nn.GaussianNLLLoss, nn.KLDivLoss, nn.BCELoss,
+ nn.BCEWithLogitsLoss, nn.MarginRankingLoss, nn.HingeEmbeddingLoss,
+ nn.MultiLabelMarginLoss, nn.HuberLoss, nn.SmoothL1Loss, nn.SoftMarginLoss,
+ nn.MultiLabelMarginLoss, nn.CosineEmbeddingLoss, nn.MultiMarginLoss,
+ nn.TripletMarginLoss, nn.TripletMarginWithDistanceLoss]
+
+
+
+
+
+
+
+
+
+
 
 class TrainPytorchNN:
     def __init__(self,
