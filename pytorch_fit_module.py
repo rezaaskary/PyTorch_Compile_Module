@@ -12,22 +12,19 @@ from torch.utils.data import TensorDataset, DataLoader
  nn.MultiLabelMarginLoss, nn.CosineEmbeddingLoss, nn.MultiMarginLoss,
  nn.TripletMarginLoss, nn.TripletMarginWithDistanceLoss]
 
+
 class CompatibilityCompiler:
     def __init__(self,
                  optimizer: pt.Callable,
                  ):
         if optimizer is 'MAE':
             self.optimizer = nn.L1Loss
-
-
+            self.regr_problem = True
+        elif optimizer is 'MSE':
+            self.optimizer = nn.MSELoss(reduction='sum')
+            self.regr_problem = True
 
         pass
-
-
-
-
-
-
 
 
 class TrainPytorchNN(CompatibilityCompiler):
@@ -51,8 +48,6 @@ class TrainPytorchNN(CompatibilityCompiler):
                  ) -> None:
 
         super(self, TrainPytorchNN).__init__(optimizer=optimizer)
-
-
 
         if dtype in [pt.float, pt.float16, pt.float32, pt.float64, pt.int32, pt.short, pt.long]:
             self.dtype = dtype
@@ -235,7 +230,7 @@ class TrainPytorchNN(CompatibilityCompiler):
                     self.optimizer.zero_grad()
                     train_loss_value.backward()
                     self.optimizer.step()
-                    #if batch_index %
+                    # if batch_index %
 
                 valid_loss, valid_metrics = 0, [0] * self.num_metrics
                 self.model.eval()
@@ -243,7 +238,7 @@ class TrainPytorchNN(CompatibilityCompiler):
                     for batch_index_valid, (x_mini_valid, y_mini_valid) in enumerate(self.valid_split):
                         y_valid_pred_prob = self.model(x_mini_valid)
                         valid_loss_value = self.loss_fcn(y_valid_pred_prob, y_mini_valid)
-# %%                    y_train_pred_label = self.prob2label(y_valid_pred_prob)
+                        # %%                    y_train_pred_label = self.prob2label(y_valid_pred_prob)
                         valid_loss += valid_loss_value
                         valid_metrics = self.metric_calculator(y_valid_pred_prob, y_mini_valid,
-                                                                    batch_index_valid, valid_metrics)
+                                                               batch_index_valid, valid_metrics)
