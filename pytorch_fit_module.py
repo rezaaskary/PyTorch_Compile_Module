@@ -12,6 +12,11 @@ from torch.utils.data import TensorDataset, DataLoader
  nn.MultiLabelMarginLoss, nn.CosineEmbeddingLoss, nn.MultiMarginLoss,
  nn.TripletMarginLoss, nn.TripletMarginWithDistanceLoss]
 
+class CompatibilityCompiler:
+    def __init__(self,
+                 optimizer: pt.Callable):
+
+        pass
 
 
 
@@ -20,9 +25,7 @@ from torch.utils.data import TensorDataset, DataLoader
 
 
 
-
-
-class TrainPytorchNN:
+class TrainPytorchNN(CompatibilityCompiler):
     def __init__(self,
                  train_split: pt.utils.data.DataLoader = None,
                  valid_split: pt.utils.data.DataLoader = None,
@@ -41,6 +44,10 @@ class TrainPytorchNN:
                  print_every: int = None,
                  dtype=None
                  ) -> None:
+
+        super(self, TrainPytorchNN).__init__(optimizer=optimizer)
+
+
 
         if dtype in [pt.float, pt.float16, pt.float32, pt.float64, pt.int32, pt.short, pt.long]:
             self.dtype = dtype
