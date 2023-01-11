@@ -29,6 +29,12 @@ class CompatibilityCompiler:
                                                  reduction='mean',
                                                  ignore_index=-100,
                                                  label_smoothing=0)
+        elif optimizer is 'CTCL':
+            # https://pytorch.org/docs/stable/generated/torch.nn.CTCLoss.html#torch.nn.CTCLoss
+            self.optimizer = nn.CTCLoss(blank=0,
+                                        reduction='mean',
+                                        zero_infinity=False)
+
 
 
         pass
