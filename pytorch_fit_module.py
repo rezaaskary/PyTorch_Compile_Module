@@ -49,7 +49,9 @@ class CompatibilityCompiler:
                                                )
         elif optimizer is 'GAUSSIAN_NLLL':
             self.optimizer = nn.GaussianNLLLoss( full=False,
-                                                 reduction='mean'
+                                                 reduction='mean',
+                                                 eps=1e-6
+
             )
         pass
 
