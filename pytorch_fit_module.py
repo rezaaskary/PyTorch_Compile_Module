@@ -18,7 +18,7 @@ class CompatibilityCompiler:
                  optimizer: pt.Callable,
                  ):
         if optimizer is 'MAE':
-            self.optimizer = nn.L1Loss
+            self.optimizer = nn.L1Loss(reduction='mean')
             self.regr_problem = True
         elif optimizer is 'MSE':
             self.optimizer = nn.MSELoss(reduction='sum')
