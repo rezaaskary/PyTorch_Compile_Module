@@ -48,11 +48,15 @@ class CompatibilityCompiler:
                                                reduction='mean'
                                                )
         elif optimizer is 'GAUSSIAN_NLLL':
-            self.optimizer = nn.GaussianNLLLoss( full=False,
+            # https://pytorch.org/docs/stable/generated/torch.nn.GaussianNLLLoss.html#torch.nn.GaussianNLLLoss
+            self.optimizer = nn.GaussianNLLLoss(full=False,
                                                  reduction='mean',
                                                  eps=1e-6
-
             )
+        elif optimizer is 'KLD':
+            # https://pytorch.org/docs/stable/generated/torch.nn.KLDivLoss.html#torch.nn.KLDivLoss
+            self.optimizer = nn. KLDivLoss(reduction='mean',
+                                           log_target=False)
         pass
 
 
