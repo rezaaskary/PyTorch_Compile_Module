@@ -38,8 +38,12 @@ class CompatibilityCompiler:
         elif optimizer is 'NLLLOSS':
             #https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss
             self.optimizer = nn.NLLLoss(weight=None,
+                                        ignore_index=-100,
+                                        reduction='mean'
                                         )
-
+        elif optimizer is 'POISSON':
+            self.optimizer = nn. PoissonNLLLoss(log_input=True,
+                                                )
 
         pass
 
