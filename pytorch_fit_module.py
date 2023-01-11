@@ -57,6 +57,12 @@ class CompatibilityCompiler:
             # https://pytorch.org/docs/stable/generated/torch.nn.KLDivLoss.html#torch.nn.KLDivLoss
             self.optimizer = nn. KLDivLoss(reduction='mean',
                                            log_target=False)
+
+
+
+
+
+
         pass
 
 
