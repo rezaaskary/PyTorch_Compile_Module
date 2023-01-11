@@ -23,6 +23,13 @@ class CompatibilityCompiler:
         elif optimizer is 'MSE':
             self.optimizer = nn.MSELoss(reduction='sum')
             self.regr_problem = True
+        elif optimizer is 'cross_entropy':
+            self.optimizer = nn.CrossEntropyLoss(weight=None,
+                                                 reduction='mean',
+                                                 ignore_index=-100,
+                                                 label_smoothing=0,
+
+                                                 )
 
         pass
 
