@@ -23,7 +23,7 @@ class CompatibilityCompiler:
         elif optimizer is 'MSE':
             self.optimizer = nn.MSELoss(reduction='sum')
             self.regr_problem = True
-        elif optimizer is 'cross_entropy':
+        elif optimizer is 'CROSS_ENTROPY':
             # logits are the input of the loss function
             self.optimizer = nn.CrossEntropyLoss(weight=None,
                                                  reduction='mean',
@@ -36,15 +36,21 @@ class CompatibilityCompiler:
                                         zero_infinity=False)
 
         elif optimizer is 'NLLLOSS':
-            #https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss
+            # https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss
             self.optimizer = nn.NLLLoss(weight=None,
                                         ignore_index=-100,
                                         reduction='mean'
                                         )
         elif optimizer is 'POISSON':
-            self.optimizer = nn. PoissonNLLLoss(log_input=True,
-                                                )
-
+            # https://pytorch.org/docs/stable/generated/torch.nn.PoissonNLLLoss.html#torch.nn.PoissonNLLLoss
+            self.optimizer = nn.PoissonNLLLoss(log_input=True,
+                                               full=False,
+                                               reduction='mean'
+                                               )
+        elif optimizer is 'GAUSSIAN_NLLL':
+            self.optimizer = nn.GaussianNLLLoss( full=False,
+                                                 reduction='mean'
+            )
         pass
 
 
