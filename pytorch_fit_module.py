@@ -14,7 +14,12 @@ from torch.utils.data import TensorDataset, DataLoader
 
 class CompatibilityCompiler:
     def __init__(self,
-                 optimizer: pt.Callable):
+                 optimizer: pt.Callable,
+                 ):
+        if optimizer is 'MAE':
+            self.optimizer = nn.L1Loss
+
+
 
         pass
 
