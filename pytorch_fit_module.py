@@ -50,13 +50,13 @@ class CompatibilityCompiler:
         elif optimizer is 'GAUSSIAN_NLLL':
             # https://pytorch.org/docs/stable/generated/torch.nn.GaussianNLLLoss.html#torch.nn.GaussianNLLLoss
             self.optimizer = nn.GaussianNLLLoss(full=False,
-                                                 reduction='mean',
-                                                 eps=1e-6
-            )
+                                                reduction='mean',
+                                                eps=1e-6
+                                                )
         elif optimizer is 'KLD':
             # https://pytorch.org/docs/stable/generated/torch.nn.KLDivLoss.html#torch.nn.KLDivLoss
-            self.optimizer = nn. KLDivLoss(reduction='mean',
-                                           log_target=False)
+            self.optimizer = nn.KLDivLoss(reduction='mean',
+                                          log_target=False)
 
         elif optimizer is 'BCEL':
             # https://pytorch.org/docs/stable/generated/torch.nn.BCELoss.html#torch.nn.BCELoss
@@ -67,8 +67,16 @@ class CompatibilityCompiler:
             self.optimizer = nn.BCEWithLogitsLoss(weight=None,
                                                   reduction='mean',
                                                   pos_weight=None
-            )
-
+                                                  )
+        elif optimizer is 'MRNKL':
+            # https://pytorch.org/docs/stable/generated/torch.nn.MarginRankingLoss.html#torch.nn.MarginRankingLoss
+            self.optimizer = nn.MarginRankingLoss(margin=0,
+                                                  reduction='mean'
+                                                  )
+        elif optimizer is 'HnEmLo':
+            # https://pytorch.org/docs/stable/generated/torch.nn.HingeEmbeddingLoss.html#torch.nn.HingeEmbeddingLoss
+        self.optimizer = nn.HingeEmbeddingLoss(margin=1.0,
+                                               reduction='mean')
 
 
 
