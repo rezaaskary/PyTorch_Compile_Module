@@ -34,14 +34,13 @@ class CompatibilityCompiler:
             raise ValueError('The batch sizes is not specified correctly!')
             # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-            if isinstance(n_batches, int):
-                self.n_batches = n_batches
-            elif not n_batches:
-                self.n_batches = None
-            else:
-                raise ValueError('The number of batches is not specified correctly!')
+        if isinstance(n_batches, int):
+            self.n_batches = n_batches
+        elif not n_batches:
+            self.n_batches = None
+        else:
+            raise ValueError('The number of batches is not specified correctly!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
 
         if device in ['cpu', 'cuda']:
             self.device = device
