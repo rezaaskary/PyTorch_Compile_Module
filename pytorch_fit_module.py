@@ -224,6 +224,7 @@ class CompatibilityCompiler:
                                                weight_decay=0
                                                )
             elif optimizer is 'LBFGS':
+                # https://pytorch.org/docs/stable/generated/torch.optim.LBFGS.html#torch.optim.LBFGS
                 self.optimizer = pt.optim.LBFGS(params=self.model.parameters(),
                                                 lr=self.learning_rate,
                                                 max_iter=20,
@@ -233,6 +234,15 @@ class CompatibilityCompiler:
                                                 history_size=100,
                                                 line_search_fn=None
                                                 )
+            elif optimizer is 'NAdam':
+                # https://pytorch.org/docs/stable/generated/torch.optim.NAdam.html#torch.optim.NAdam
+                self.optimizer = pt.optim.NAdam(params=self.model.parameters(),
+                                                lr=self.learning_rate,
+                                                betas=(0.9, 0.99),
+                                                eps=1e-9,
+                                                weight_decay=0,
+                                                momentum_decay=0.004)
+
 
 
         pass
