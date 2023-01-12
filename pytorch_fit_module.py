@@ -12,8 +12,19 @@ class CompatibilityCompiler:
                  optimizer: str = 'Adam',
                  learning_rate: float = 0.01,
                  device: str = 'cpu',
+                 random_seed: int = 42,
+                 model: pt.Callable = None
 
                  ):
+        if isinstance(random_seed, int):
+            pt.manual_seed(random_seed)
+            pt.cuda.manual_seed(random_seed)
+            self.random_seed = random_seed
+        elif not random_seed:
+            pass
+        else:
+            raise Exception(f'{random_seed} is not a correct value of random seed')
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if device in ['cpu', 'cuda']:
             self.device = device
         else:
@@ -25,7 +36,6 @@ class CompatibilityCompiler:
         else:
             raise ValueError('The pytorch model function is not specified correctly!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
 
         if isinstance(learning_rate, float):
             self.learning_rate = learning_rate
@@ -170,7 +180,7 @@ class TrainPytorchNN(CompatibilityCompiler):
                  model: pt.Callable = None,
                  loss_fcn: pt.Callable = None,
                  metrics: list = None,
-                 optimizer: pt.Callable = None,
+                 optimizer: str = 'Adam',
                  epochs: int = 1000,
                  learning_rate: float = 1e-2,
                  batch_sizes: int = None,
@@ -182,7 +192,10 @@ class TrainPytorchNN(CompatibilityCompiler):
                  dtype=None
                  ) -> None:
 
-        super(self, TrainPytorchNN).__init__(optimizer=optimizer)
+        super(self, TrainPytorchNN).__init__(optimizer=optimizer,
+                                             learning_rate=learning_rate,
+                                             device=device,
+                                             random_seed=random_seed, )
 
         if dtype in [pt.float, pt.float16, pt.float32, pt.float64, pt.int32, pt.short, pt.long]:
             self.dtype = dtype
@@ -204,15 +217,7 @@ class TrainPytorchNN(CompatibilityCompiler):
         else:
             raise ValueError('The batch sizes is not specified correctly!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        if isinstance(random_seed, int):
-            pt.manual_seed(random_seed)
-            pt.cuda.manual_seed(random_seed)
-            self.random_seed = random_seed
-        elif not random_seed:
-            pass
-        else:
-            raise Exception(f'{random_seed} is not a correct value of random seed')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
         if isinstance(n_batches, int):
             self.n_batches = n_batches
         elif not n_batches:
@@ -275,8 +280,6 @@ class TrainPytorchNN(CompatibilityCompiler):
         else:
             raise ValueError('Only tuple and DataLoader variables are supported!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-
 
         if isinstance(loss_fcn, pt.Callable):
             self.loss_fcn = loss_fcn
