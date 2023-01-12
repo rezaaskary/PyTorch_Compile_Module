@@ -223,6 +223,17 @@ class CompatibilityCompiler:
                                                t0=1e6,
                                                weight_decay=0
                                                )
+            elif optimizer is 'LBFGS':
+                self.optimizer = pt.optim.LBFGS(params=self.model.parameters(),
+                                                lr=self.learning_rate,
+                                                max_iter=20,
+                                                max_eval=None,
+                                                tolerance_grad=1e-7,
+                                                tolerance_change=1e-9,
+                                                history_size=100,
+                                                line_search_fn=None
+                                                )
+
 
         pass
 
