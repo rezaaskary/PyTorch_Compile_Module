@@ -8,8 +8,33 @@ from torch.utils.data import TensorDataset, DataLoader
 
 class CompatibilityCompiler:
     def __init__(self,
-                 loss: pt.Callable,
+                 loss: str = 'MSELoss',
+                 optimizer: str = 'Adam',
+                 learning_rate: float = 0.01,
+                 device: str = 'cpu',
+
                  ):
+        if device in ['cpu', 'cuda']:
+            self.device = device
+        else:
+            raise ValueError(f'{device} is not a correct device type.')
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+        if isinstance(model, pt.Callable):
+            self.model = model.to(device=self.device)
+        else:
+            raise ValueError('The pytorch model function is not specified correctly!')
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+        if isinstance(learning_rate, float):
+            self.learning_rate = learning_rate
+        elif not learning_rate:
+            self.learning_rate = 1e-2
+        else:
+            raise ValueError('The learning rate is not specified correctly!')
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
         if isinstance(loss, str):
             if loss is 'L1Loss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.L1Loss.html#torch.nn.L1Loss
@@ -23,14 +48,14 @@ class CompatibilityCompiler:
                 # https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html#torch.nn.CrossEntropyLoss
                 # logits are the input of the loss function
                 self.loss = nn.CrossEntropyLoss(weight=None,
-                                                     reduction='mean',
-                                                     ignore_index=-100,
-                                                     label_smoothing=0)
+                                                reduction='mean',
+                                                ignore_index=-100,
+                                                label_smoothing=0)
             elif loss is 'CTCLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.CTCLoss.html#torch.nn.CTCLoss
                 self.loss = nn.CTCLoss(blank=0,
-                                            reduction='mean',
-                                            zero_infinity=False)
+                                       reduction='mean',
+                                       zero_infinity=False)
 
             elif loss is 'NLLLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss
@@ -53,28 +78,28 @@ class CompatibilityCompiler:
             elif loss is 'KLDivLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.KLDivLoss.html#torch.nn.KLDivLoss
                 self.loss = nn.KLDivLoss(reduction='mean',
-                                              log_target=False)
+                                         log_target=False)
 
             elif loss is 'BCELoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.BCELoss.html#torch.nn.BCELoss
                 self.loss = nn.BCELoss(weight=None,
-                                            reduction='mean')
+                                       reduction='mean')
             elif loss is 'BCEWithLogitsLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html#torch.nn.BCEWithLogitsLoss
                 self.loss = nn.BCEWithLogitsLoss(weight=None,
-                                                      reduction='mean',
-                                                      pos_weight=None
-                                                      )
+                                                 reduction='mean',
+                                                 pos_weight=None
+                                                 )
             elif loss is 'MarginRankingLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.MarginRankingLoss.html#torch.nn.MarginRankingLoss
                 self.loss = nn.MarginRankingLoss(margin=0,
-                                                      reduction='mean'
-                                                      )
+                                                 reduction='mean'
+                                                 )
             elif loss is 'HingeEmbeddingLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.HingeEmbeddingLoss.html#torch.nn.HingeEmbeddingLoss
                 self.loss = nn.HingeEmbeddingLoss(margin=1.0,
-                                                       reduction='mean'
-                                                       )
+                                                  reduction='mean'
+                                                  )
             elif loss is 'MultiLabelMarginLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.MultiLabelMarginLoss.html#torch.nn.MultiLabelMarginLoss
                 self.loss = nn.MultiLabelMarginLoss(reduction='mean')
@@ -82,13 +107,13 @@ class CompatibilityCompiler:
             elif loss is 'HuberLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html#torch.nn.HuberLoss
                 self.loss = nn.HuberLoss(reduction='mean',
-                                              delta=1.0
-                                              )
+                                         delta=1.0
+                                         )
             elif loss is 'SmoothL1Loss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.SmoothL1Loss.html#torch.nn.SmoothL1Loss
                 self.loss = nn.SmoothL1Loss(reduction='mean',
-                                                 beta=1.0
-                                                 )
+                                            beta=1.0
+                                            )
             elif loss is 'SoftMarginLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.SoftMarginLoss.html#torch.nn.SoftMarginLoss
                 self.optimizer = nn.SoftMarginLoss(reduction='mean')
@@ -130,7 +155,9 @@ class CompatibilityCompiler:
         else:
             raise Exception('Please n')
 
-
+        if isinstance(optimizer, str):
+            if optimizer is 'Adadelta':
+                self.optimizer = pt.optim.Adadelta()
 
         pass
 
@@ -249,11 +276,7 @@ class TrainPytorchNN(CompatibilityCompiler):
             raise ValueError('Only tuple and DataLoader variables are supported!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-        if isinstance(model, pt.Callable):
-            self.model = model.to(device=self.device)
-        else:
-            raise ValueError('The pytorch model function is not specified correctly!')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 
         if isinstance(loss_fcn, pt.Callable):
             self.loss_fcn = loss_fcn
@@ -272,13 +295,7 @@ class TrainPytorchNN(CompatibilityCompiler):
         else:
             raise ValueError('The number of epochs is not specified correctly!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        if isinstance(learning_rate, float):
-            self.learning_rate = learning_rate
-        elif not learning_rate:
-            self.learning_rate = 1e-2
-        else:
-            raise ValueError('The learning rate is not specified correctly!')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
         self.optimizer = self.optimizer(lr=self.learning_rate,
                                         params=self.model.parameters()
                                         )
