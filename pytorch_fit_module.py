@@ -17,13 +17,16 @@ class CompatibilityCompiler:
     def __init__(self,
                  optimizer: pt.Callable,
                  ):
-        if optimizer is 'MAE':
+        if optimizer is 'L1Loss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.L1Loss.html#torch.nn.L1Loss
             self.optimizer = nn.L1Loss(reduction='mean')
-            self.regr_problem = True
-        elif optimizer is 'MSE':
-            self.optimizer = nn.MSELoss(reduction='sum')
-            self.regr_problem = True
-        elif optimizer is 'CROSS_ENTROPY':
+
+        elif optimizer is 'MSELoss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html#torch.nn.MSELoss
+            self.optimizer = nn.MSELoss(reduction='mean')
+
+        elif optimizer is 'CrossEntropyLoss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html#torch.nn.CrossEntropyLoss
             # logits are the input of the loss function
             self.optimizer = nn.CrossEntropyLoss(weight=None,
                                                  reduction='mean',
@@ -118,6 +121,13 @@ class CompatibilityCompiler:
                                                   p=2,
                                                   eps=1e-6,
                                                   reduction='mean')
+
+        elif optimizer is 'TripletMarginWithDistanceLoss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.TripletMarginWithDistanceLoss.html#torch.nn.TripletMarginWithDistanceLoss
+            self.optimizer = nn.TripletMarginWithDistanceLoss(distance_function=None,
+                                                              margin=1.0,
+                                                              swap=False,
+                                                              reduction='mean')
 
 
 
