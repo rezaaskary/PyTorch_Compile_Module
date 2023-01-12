@@ -58,7 +58,16 @@ class CompatibilityCompiler:
             self.optimizer = nn. KLDivLoss(reduction='mean',
                                            log_target=False)
 
-
+        elif optimizer is 'BCEL':
+            # https://pytorch.org/docs/stable/generated/torch.nn.BCELoss.html#torch.nn.BCELoss
+            self.optimizer = nn.BCELoss(weight=None,
+                                        reduction='mean')
+        elif optimizer is 'BCEWLOL':
+            # https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html#torch.nn.BCEWithLogitsLoss
+            self.optimizer = nn.BCEWithLogitsLoss(weight=None,
+                                                  reduction='mean',
+                                                  pos_weight=None
+            )
 
 
 
