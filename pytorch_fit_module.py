@@ -32,51 +32,51 @@ class CompatibilityCompiler:
                                                  reduction='mean',
                                                  ignore_index=-100,
                                                  label_smoothing=0)
-        elif optimizer is 'CTCL':
+        elif optimizer is 'CTCLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.CTCLoss.html#torch.nn.CTCLoss
             self.optimizer = nn.CTCLoss(blank=0,
                                         reduction='mean',
                                         zero_infinity=False)
 
-        elif optimizer is 'NLLLOSS':
+        elif optimizer is 'NLLLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss
             self.optimizer = nn.NLLLoss(weight=None,
                                         ignore_index=-100,
                                         reduction='mean'
                                         )
-        elif optimizer is 'POISSON':
+        elif optimizer is 'PoissonNLLLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.PoissonNLLLoss.html#torch.nn.PoissonNLLLoss
             self.optimizer = nn.PoissonNLLLoss(log_input=True,
                                                full=False,
                                                reduction='mean'
                                                )
-        elif optimizer is 'GAUSSIAN_NLLL':
+        elif optimizer is 'GaussianNLLLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.GaussianNLLLoss.html#torch.nn.GaussianNLLLoss
             self.optimizer = nn.GaussianNLLLoss(full=False,
                                                 reduction='mean',
                                                 eps=1e-6
                                                 )
-        elif optimizer is 'KLD':
+        elif optimizer is 'KLDivLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.KLDivLoss.html#torch.nn.KLDivLoss
             self.optimizer = nn.KLDivLoss(reduction='mean',
                                           log_target=False)
 
-        elif optimizer is 'BCEL':
+        elif optimizer is 'BCELoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.BCELoss.html#torch.nn.BCELoss
             self.optimizer = nn.BCELoss(weight=None,
                                         reduction='mean')
-        elif optimizer is 'BCEWLOL':
+        elif optimizer is 'BCEWithLogitsLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html#torch.nn.BCEWithLogitsLoss
             self.optimizer = nn.BCEWithLogitsLoss(weight=None,
                                                   reduction='mean',
                                                   pos_weight=None
                                                   )
-        elif optimizer is 'MRNKL':
+        elif optimizer is 'MarginRankingLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.MarginRankingLoss.html#torch.nn.MarginRankingLoss
             self.optimizer = nn.MarginRankingLoss(margin=0,
                                                   reduction='mean'
                                                   )
-        elif optimizer is 'HnEmLo':
+        elif optimizer is 'HingeEmbeddingLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.HingeEmbeddingLoss.html#torch.nn.HingeEmbeddingLoss
             self.optimizer = nn.HingeEmbeddingLoss(margin=1.0,
                                                    reduction='mean'
@@ -84,6 +84,7 @@ class CompatibilityCompiler:
         elif optimizer is 'MultiLabelMarginLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.MultiLabelMarginLoss.html#torch.nn.MultiLabelMarginLoss
             self.optimizer = nn.MultiLabelMarginLoss(reduction='mean')
+
         elif optimizer is 'HuberLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html#torch.nn.HuberLoss
             self.optimizer = nn.HuberLoss(reduction='mean',
