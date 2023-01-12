@@ -83,11 +83,24 @@ class CompatibilityCompiler:
             self.optimizer = nn.MultiLabelMarginLoss(reduction='mean')
         elif optimizer is 'HuberLoss':
             # https://pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html#torch.nn.HuberLoss
-        self.optimizer = nn.HuberLoss(reduction='mean',
-                                      delta=1.0
-                                      )
+            self.optimizer = nn.HuberLoss(reduction='mean',
+                                          delta=1.0
+                                          )
+        elif optimizer is 'SmoothL1Loss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.SmoothL1Loss.html#torch.nn.SmoothL1Loss
+            self.optimizer = nn.SmoothL1Loss(reduction='mean',
+                                             beta=1.0
+                                             )
+        elif optimizer is 'SoftMarginLoss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.SoftMarginLoss.html#torch.nn.SoftMarginLoss
+            self.optimizer = nn.SoftMarginLoss(reduction='mean')
 
-
+        elif optimizer is 'MultiLabelSoftMarginLoss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.MultiLabelSoftMarginLoss.html#torch.nn.MultiLabelSoftMarginLoss
+            self.optimizer = nn.MultiLabelSoftMarginLoss(weight=None,
+                                                         reduction='mean'
+                                                         )
+            elif optimizer is
         pass
 
 
