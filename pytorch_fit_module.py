@@ -167,7 +167,14 @@ class CompatibilityCompiler:
 
         if isinstance(optimizer, str):
             if optimizer is 'Adadelta':
-                self.optimizer = pt.optim.Adadelta()
+                # https://pytorch.org/docs/stable/generated/torch.optim.Adadelta.html#torch.optim.Adadelta
+                self.optimizer = pt.optim.Adadelta(params=self.model.parameters(),
+                                                   lr=self.learning_rate,
+                                                   rho=0.9,
+                                                   eps=1e-6,
+                                                   weight_decay=0
+                                                   )
+            elif
 
         pass
 
