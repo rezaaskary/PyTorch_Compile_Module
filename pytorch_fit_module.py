@@ -182,10 +182,24 @@ class CompatibilityCompiler:
                                                   weight_decay=0,
                                                   eps=1e-10
                                                   )
-            elif
-
-
-
+            elif optimizer is 'Adam':
+                # https://pytorch.org/docs/stable/generated/torch.optim.Adam.html#torch.optim.Adam
+                self.optimizer = pt.optim.Adam(params=self.model.parameters(),
+                                               lr=self.learning_rate,
+                                               betas=(0.9, 0.99),
+                                               eps=1e-9,
+                                               weight_decay=0,
+                                               amsgrad=False
+                                               )
+            elif optimizer is 'AdamW':
+                # https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html#torch.optim.AdamW
+                self.optimizer = pt.optim.AdamW(params=self.model.parameters(),
+                                                lr=self.learning_rate,
+                                                betas=(0.9, 0.99),
+                                                eps=1e-9,
+                                                weight_decay=0,
+                                                amsgrad=False
+                                                )
 
         pass
 
