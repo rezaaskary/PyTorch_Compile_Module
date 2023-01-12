@@ -174,7 +174,18 @@ class CompatibilityCompiler:
                                                    eps=1e-6,
                                                    weight_decay=0
                                                    )
+            elif optimizer is 'Adagrad':
+                # https://pytorch.org/docs/stable/generated/torch.optim.Adagrad.html#torch.optim.Adagrad
+                self.optimizer = pt.optim.Adagrad(params=self.model.parameters(),
+                                                  lr=self.learning_rate,
+                                                  lr_decay=0,
+                                                  weight_decay=0,
+                                                  eps=1e-10
+                                                  )
             elif
+
+
+
 
         pass
 
