@@ -13,8 +13,9 @@ class CompatibilityCompiler:
                  learning_rate: float = 0.01,
                  device: str = 'cpu',
                  random_seed: int = 42,
-                 model: pt.Callable = None
-
+                 model: pt.Callable = None,
+                 batch_sizes: int = None,
+                 n_batches: int = None
                  ):
         if isinstance(random_seed, int):
             pt.manual_seed(random_seed)
@@ -25,6 +26,23 @@ class CompatibilityCompiler:
         else:
             raise Exception(f'{random_seed} is not a correct value of random seed')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        if isinstance(batch_sizes, int):
+            self.batch_sizes = batch_sizes
+        elif not batch_sizes:
+            self.batch_sizes = None
+        else:
+            raise ValueError('The batch sizes is not specified correctly!')
+            # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+            if isinstance(n_batches, int):
+                self.n_batches = n_batches
+            elif not n_batches:
+                self.n_batches = None
+            else:
+                raise ValueError('The number of batches is not specified correctly!')
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
         if device in ['cpu', 'cuda']:
             self.device = device
         else:
@@ -282,8 +300,6 @@ class CompatibilityCompiler:
         else:
             raise Exception('The format of given optimizer variable is not valid!')
 
-        pass
-
 
 class TrainPytorchNN(CompatibilityCompiler):
     def __init__(self,
@@ -316,27 +332,7 @@ class TrainPytorchNN(CompatibilityCompiler):
             self.dtype = pt.float32
         else:
             raise ValueError(f' {dtype} is not the correct type of variables in pytorch!')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-        if device in ['cpu', 'cuda']:
-            self.device = device
-        else:
-            raise ValueError(f'{device} is not a correct device type.')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        if isinstance(batch_sizes, int):
-            self.batch_sizes = batch_sizes
-        elif not batch_sizes:
-            self.batch_sizes = None
-        else:
-            raise ValueError('The batch sizes is not specified correctly!')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-        if isinstance(n_batches, int):
-            self.n_batches = n_batches
-        elif not n_batches:
-            self.n_batches = None
-        else:
-            raise ValueError('The number of batches is not specified correctly!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         if isinstance(train_split, pt.utils.data.DataLoader):
