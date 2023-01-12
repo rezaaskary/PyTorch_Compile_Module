@@ -261,6 +261,17 @@ class CompatibilityCompiler:
                                                   momentum=0,
                                                   centered=False
                                                   )
+            elif optimizer is 'Rprop':
+                # https://pytorch.org/docs/stable/generated/torch.optim.Rprop.html#torch.optim.Rprop
+                self.optimizer = pt.optim.Rprop(params=self.model.parameters(),
+                                                lr=self.learning_rate,
+                                                etas=(0.5, 1.2),
+                                                step_sizes=(1e-6, 50),
+                                                )
+            elif optimizer is 'SGD':
+                # https://pytorch.org/docs/stable/generated/torch.optim.SGD.html#torch.optim.SGD
+                self.optimizer = pt.optim.SGD()
+
 
         pass
 
