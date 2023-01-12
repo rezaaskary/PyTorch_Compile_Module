@@ -270,8 +270,17 @@ class CompatibilityCompiler:
                                                 )
             elif optimizer is 'SGD':
                 # https://pytorch.org/docs/stable/generated/torch.optim.SGD.html#torch.optim.SGD
-                self.optimizer = pt.optim.SGD()
-
+                self.optimizer = pt.optim.SGD(params=self.model.parameters(),
+                                              lr=self.learning_rate,
+                                              momentum=0,
+                                              dampening=0,
+                                              weight_decay=0,
+                                              nesterov=False
+                                              )
+            else:
+                raise ValueError('The specified optimizer is nor implemented')
+        else:
+            raise Exception('The format of given optimizer variable is not valid!')
 
         pass
 
