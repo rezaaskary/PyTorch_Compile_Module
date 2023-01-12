@@ -200,6 +200,13 @@ class CompatibilityCompiler:
                                                 weight_decay=0,
                                                 amsgrad=False
                                                 )
+            elif optimizer is 'SparseAdam':
+                self.optimizer = pt.optim.SparseAdam(params=self.model.parameters(),
+                                                     lr=self.learning_rate,
+                                                     betas=(0.9, 0.99),
+                                                     eps=1e-9
+                                                     )
+
 
         pass
 
