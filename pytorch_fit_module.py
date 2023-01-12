@@ -241,9 +241,26 @@ class CompatibilityCompiler:
                                                 betas=(0.9, 0.99),
                                                 eps=1e-9,
                                                 weight_decay=0,
-                                                momentum_decay=0.004)
-
-
+                                                momentum_decay=0.004
+                                                )
+            elif optimizer is 'RAdam':
+                # https://pytorch.org/docs/stable/generated/torch.optim.RAdam.html#torch.optim.RAdam
+                self.optimizer = pt.optim.RAdam(params=self.model.parameters(),
+                                                lr=self.learning_rate,
+                                                betas=(0.9, 0.99),
+                                                eps=1e-9,
+                                                weight_decay=0,
+                                                )
+            elif optimizer is 'RMSprop':
+                # https://pytorch.org/docs/stable/generated/torch.optim.RMSprop.html#torch.optim.RMSprop
+                self.optimizer = pt.optim.RMSprop(params=self.model.parameters(),
+                                                  lr=self.learning_rate,
+                                                  alpha=0.99,
+                                                  eps=1e-8,
+                                                  weight_decay=0,
+                                                  momentum=0,
+                                                  centered=False
+                                                  )
 
         pass
 
