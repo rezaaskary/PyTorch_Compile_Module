@@ -100,7 +100,29 @@ class CompatibilityCompiler:
             self.optimizer = nn.MultiLabelSoftMarginLoss(weight=None,
                                                          reduction='mean'
                                                          )
-            elif optimizer is
+        elif optimizer is 'CosineEmbeddingLoss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.CosineEmbeddingLoss.html#torch.nn.CosineEmbeddingLoss
+            self.optimizer = nn.CosineEmbeddingLoss(reduction='mean',
+                                                    margin=0
+                                                    )
+        elif optimizer is 'MultiMarginLoss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.MultiMarginLoss.html#torch.nn.MultiMarginLoss
+            self.optimizer = nn.MultiMarginLoss(p=1,
+                                                margin=1.0,
+                                                weight=None,
+                                                reduction='mean'
+                                                )
+        elif optimizer is 'TripletMarginLoss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.TripletMarginLoss.html#torch.nn.TripletMarginLoss
+            self.optimizer = nn.TripletMarginLoss(margin=1.0,
+                                                  p=2,
+                                                  eps=1e-6,
+                                                  reduction='mean')
+
+
+
+
+
         pass
 
 
