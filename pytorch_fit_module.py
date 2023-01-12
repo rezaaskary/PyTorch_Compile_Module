@@ -8,6 +8,8 @@ from torch.utils.data import TensorDataset, DataLoader
 
 class CompatibilityCompiler:
     def __init__(self,
+                 train_split: pt.utils.data.DataLoader = None,
+                 valid_split: pt.utils.data.DataLoader = None,
                  loss: str = 'MSELoss',
                  optimizer: str = 'Adam',
                  learning_rate: float = 0.01,
@@ -299,6 +301,57 @@ class CompatibilityCompiler:
         else:
             raise Exception('The format of given optimizer variable is not valid!')
 
+            # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+        if isinstance(train_split, pt.utils.data.DataLoader):
+            self.train_split = train_split
+            self.train_n_batches = len(self.train_split)
+
+        elif isinstance(train_split, tuple):
+            tensordataset_train = TensorDataset(pt.tensor(train_split[0],
+                                                          dtype=self.dtype,
+                                                          device=self.device),
+                                                pt.tensor(train_split[1],
+                                                          dtype=self.dtype,
+                                                          device=self.device)
+                                                )
+            self.train_split = DataLoader(dataset=tensordataset_train,
+                                          shuffle=True,
+                                          batch_size=self.batch_sizes
+                                          )
+            self.train_n_batches = len(self.train_split)
+        else:
+            raise ValueError('Only tuple and DataLoader variables are supported!')
+
+
+        if isinstance(valid_split, pt.utils.data.DataLoader):
+            self.valid_split = valid_split
+            self.valid_n_batches = len(self.valid_split)
+
+        elif isinstance(valid_split, tuple):
+            tensordataset_valid = TensorDataset(pt.tensor(valid_split[0],
+                                                          dtype=self.dtype,
+                                                          device=self.device),
+                                                pt.tensor(valid_split[1],
+                                                          dtype=self.dtype,
+                                                          device=self.device)
+                                                )
+
+            self.valid_split = DataLoader(dataset=tensordataset_valid,
+                                          shuffle=True,
+                                          batch_size=self.batch_sizes
+                                          )
+            self.valid_n_batches = len(self.valid_split)
+
+        elif not valid_split:
+            self.valid_split = None
+            self.valid_n_batches = 0
+        else:
+            raise ValueError('Only tuple and DataLoader variables are supported!')
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
 
 class TrainPytorchNN(CompatibilityCompiler):
     def __init__(self,
@@ -332,27 +385,7 @@ class TrainPytorchNN(CompatibilityCompiler):
         else:
             raise ValueError(f' {dtype} is not the correct type of variables in pytorch!')
 
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-        if isinstance(train_split, pt.utils.data.DataLoader):
-            self.train_split = train_split
-            self.train_n_batches = len(self.train_split)
-
-        elif isinstance(train_split, tuple):
-            tensordataset_train = TensorDataset(pt.tensor(train_split[0],
-                                                          dtype=self.dtype,
-                                                          device=self.device),
-                                                pt.tensor(train_split[1],
-                                                          dtype=self.dtype,
-                                                          device=self.device)
-                                                )
-            self.train_split = DataLoader(dataset=tensordataset_train,
-                                          shuffle=True,
-                                          batch_size=self.batch_sizes
-                                          )
-            self.train_n_batches = len(self.train_split)
-        else:
-            raise ValueError('Only tuple and DataLoader variables are supported!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         if isinstance(n_class, int):
@@ -363,31 +396,6 @@ class TrainPytorchNN(CompatibilityCompiler):
             raise ValueError(f'{n_class} is not the correct value for the number of classes.')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-        if isinstance(valid_split, pt.utils.data.DataLoader):
-            self.valid_split = valid_split
-            self.valid_n_batches = len(self.valid_split)
-
-        elif isinstance(valid_split, tuple):
-            tensordataset_valid = TensorDataset(pt.tensor(valid_split[0],
-                                                          dtype=self.dtype,
-                                                          device=self.device),
-                                                pt.tensor(valid_split[1],
-                                                          dtype=self.dtype,
-                                                          device=self.device)
-                                                )
-
-            self.valid_split = DataLoader(dataset=tensordataset_valid,
-                                          shuffle=True,
-                                          batch_size=self.batch_sizes
-                                          )
-            self.valid_n_batches = len(self.valid_split)
-
-        elif not valid_split:
-            self.valid_split = None
-            self.valid_n_batches = 0
-        else:
-            raise ValueError('Only tuple and DataLoader variables are supported!')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         if isinstance(loss_fcn, pt.Callable):
             self.loss_fcn = loss_fcn
