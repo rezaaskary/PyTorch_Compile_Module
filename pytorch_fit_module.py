@@ -75,9 +75,17 @@ class CompatibilityCompiler:
                                                   )
         elif optimizer is 'HnEmLo':
             # https://pytorch.org/docs/stable/generated/torch.nn.HingeEmbeddingLoss.html#torch.nn.HingeEmbeddingLoss
-        self.optimizer = nn.HingeEmbeddingLoss(margin=1.0,
-                                               reduction='mean')
-
+            self.optimizer = nn.HingeEmbeddingLoss(margin=1.0,
+                                                   reduction='mean'
+                                                   )
+        elif optimizer is 'MultiLabelMarginLoss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.MultiLabelMarginLoss.html#torch.nn.MultiLabelMarginLoss
+            self.optimizer = nn.MultiLabelMarginLoss(reduction='mean')
+        elif optimizer is 'HuberLoss':
+            # https://pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html#torch.nn.HuberLoss
+        self.optimizer = nn.HuberLoss(reduction='mean',
+                                      delta=1.0
+                                      )
 
 
         pass
