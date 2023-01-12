@@ -201,12 +201,28 @@ class CompatibilityCompiler:
                                                 amsgrad=False
                                                 )
             elif optimizer is 'SparseAdam':
+                # https://pytorch.org/docs/stable/generated/torch.optim.SparseAdam.html#torch.optim.SparseAdam
                 self.optimizer = pt.optim.SparseAdam(params=self.model.parameters(),
                                                      lr=self.learning_rate,
                                                      betas=(0.9, 0.99),
                                                      eps=1e-9
                                                      )
-
+            elif optimizer is 'Adamax':
+                # https://pytorch.org/docs/stable/generated/torch.optim.Adamax.html#torch.optim.Adamax
+                self.optimizer = pt.optim.Adamax(params=self.model.parameters(),
+                                                 lr=self.learning_rate,
+                                                 betas=(0.9, 0.99),
+                                                 eps=1e-9
+                                                 )
+            elif optimizer is 'ASGD':
+                # https://pytorch.org/docs/stable/generated/torch.optim.ASGD.html#torch.optim.ASGD
+                self.optimizer = pt.optim.ASGD(params=self.model.parameters(),
+                                               lr=self.learning_rate,
+                                               lambd=1e-4,
+                                               alpha=0.75,
+                                               t0=1e6,
+                                               weight_decay=0
+                                               )
 
         pass
 
