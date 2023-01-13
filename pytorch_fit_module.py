@@ -360,7 +360,7 @@ class CompatibilityCompiler:
             self.n_class = None
         else:
             raise ValueError(f'{n_class} is not the correct value for the number of classes.')
-        #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if isinstance(metrics, list):
             for sub_fun in metrics:
                 if isinstance(sub_fun, pt.Callable):
@@ -368,6 +368,7 @@ class CompatibilityCompiler:
                 else:
                     raise ValueError('Please enter the list of metric functions correctly')
             self.metrics = metrics
+
 
 class TrainPytorchNN(CompatibilityCompiler):
     def __init__(self,
