@@ -415,23 +415,11 @@ class CompatibilityCompiler:
 
 
 class TrainPytorchNN(CompatibilityCompiler):
-    def __init__(self,
-                 train_split: pt.utils.data.DataLoader = None,
-                 valid_split: pt.utils.data.DataLoader = None,
-                 n_class: int = None,
-                 model: pt.Callable = None,
-                 loss: str = 'MSELoss',
-                 metrics: list = None,
-                 optimizer: str = 'Adam',
-                 epochs: int = 1000,
-                 learning_rate: float = 1e-2,
-                 batch_sizes: int = None,
-                 n_batches: int = None,
-                 verbose: bool = True,
-                 device: str = 'cpu',
-                 random_seed: int = 42,
-                 print_every: int = None,
-                 ) -> None:
+    def __init__(self, train_split: pt.utils.data.DataLoader = None, valid_split: pt.utils.data.DataLoader = None,
+                 n_class: int = None, model: pt.Callable = None, loss: str = 'MSELoss', metrics: list = None,
+                 optimizer: str = 'Adam', epochs: int = 1000, learning_rate: float = 1e-2, batch_sizes: int = None,
+                 n_batches: int = None, verbose: bool = True, device: str = 'cpu', random_seed: int = 42,
+                 print_every: int = None) -> None:
 
         super(self, TrainPytorchNN).__init__(optimizer=optimizer,
                                              train_split=train_split,
@@ -449,9 +437,8 @@ class TrainPytorchNN(CompatibilityCompiler):
                                              device=device,
                                              random_seed=random_seed)
 
-
-
-
+        super().__init__(train_split, valid_split, verbose, print_every, n_class, loss, optimizer, metrics,
+                         learning_rate, device, random_seed, model, batch_sizes, n_batches, epochs)
 
         def _metric_calculator(true_variables: pt.tensor, predicted_variable: pt.tensor,
                                index: int, previous_scores: list) -> list:
