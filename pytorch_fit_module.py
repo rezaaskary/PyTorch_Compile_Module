@@ -353,7 +353,7 @@ class CompatibilityCompiler:
             self.epochs = 1000
         else:
             raise ValueError('The number of epochs is not specified correctly!')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if isinstance(n_class, int):
             self.n_class = n_class
         elif not n_class:
@@ -363,8 +363,11 @@ class CompatibilityCompiler:
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if isinstance(metrics, list):
             for sub_fun in metrics:
-                if isinstance(sub_fun, pt.Callable):
-                    pass
+                self.metrics = []
+                if isinstance(sub_fun, str):
+
+
+
                 else:
                     raise ValueError('Please enter the list of metric functions correctly')
             self.metrics = metrics
