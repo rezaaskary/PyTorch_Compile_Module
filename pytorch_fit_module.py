@@ -397,7 +397,7 @@ class CompatibilityCompiler:
                         self.metrics.append(tm.classification.BinaryAccuracy)
                     elif sub_fun is 'AUROC':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/auroc.html
-                        self.metrics.append(tm.AUROC(task='multiclass',num_classes=self.n_class))
+                        self.metrics.append(tm.AUROC(task='multiclass', num_classes=self.n_class))
                     elif sub_fun is 'BinaryAUROC':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
                         self.metrics.append(tm.classification.BinaryAUROC)
@@ -421,24 +421,21 @@ class TrainPytorchNN(CompatibilityCompiler):
                  n_batches: int = None, verbose: bool = True, device: str = 'cpu', random_seed: int = 42,
                  print_every: int = None) -> None:
 
-        super(self, TrainPytorchNN).__init__(optimizer=optimizer,
-                                             train_split=train_split,
-                                             valid_split=valid_split,
-                                             model=model,
-                                             loss=loss,
-                                             verbose=verbose,
-                                             n_class=n_class,
-                                             epochs=epochs,
-                                             batch_sizes=batch_sizes,
-                                             metrics=metrics,
-                                             n_batches=n_batches,
-                                             print_every=print_every,
-                                             learning_rate=learning_rate,
-                                             device=device,
-                                             random_seed=random_seed)
-
-        super().__init__(train_split, valid_split, verbose, print_every, n_class, loss, optimizer, metrics,
-                         learning_rate, device, random_seed, model, batch_sizes, n_batches, epochs)
+        super(TrainPytorchNN).__init__(optimizer=optimizer,
+                                       train_split=train_split,
+                                       valid_split=valid_split,
+                                       model=model,
+                                       loss=loss,
+                                       verbose=verbose,
+                                       n_class=n_class,
+                                       epochs=epochs,
+                                       batch_sizes=batch_sizes,
+                                       metrics=metrics,
+                                       n_batches=n_batches,
+                                       print_every=print_every,
+                                       learning_rate=learning_rate,
+                                       device=device,
+                                       random_seed=random_seed)
 
         def _metric_calculator(true_variables: pt.tensor, predicted_variable: pt.tensor,
                                index: int, previous_scores: list) -> list:
