@@ -388,6 +388,10 @@ class CompatibilityCompiler:
                         # https://torchmetrics.readthedocs.io/en/stable/regression/concordance_corr_coef.html
                         self.metrics.append(tm.ConcordanceCorrCoef)
                         self.metrics_requires_prob.append(False)
+                    elif sub_fun is 'CosineSimilarity':
+                        # https://torchmetrics.readthedocs.io/en/stable/regression/cosine_similarity.html
+                        self.metrics.append(tm.CosineSimilarity)
+                        self.metrics_requires_prob.append(False)
 
 
 
