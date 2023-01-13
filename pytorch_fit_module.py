@@ -364,44 +364,41 @@ class CompatibilityCompiler:
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if isinstance(metrics, list):
             self.metrics = []
-            self.metrics_requires_prob = []
             for sub_fun in metrics:
                 if isinstance(sub_fun, str):
                     if sub_fun is 'pairwise_cosine_similarity':
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/cosine_similarity.html
                         self.metrics.append(tm.functional.pairwise_cosine_similarity)
-                        self.metrics_requires_prob.append(False)
                     elif sub_fun is 'pairwise_euclidean_distance':
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/euclidean_distance.html
                         self.metrics.append(tm.functional.pairwise_euclidean_distance)
-                        self.metrics_requires_prob.append(False)
                     elif sub_fun is 'pairwise_linear_similarity':
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/linear_similarity.html
                         self.metrics.append(tm.functional.pairwise_linear_similarity)
-                        self.metrics_requires_prob.append(False)
                     elif sub_fun is 'pairwise_manhattan_distance':
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/manhattan_distance.html
                         self.metrics.append(tm.functional.pairwise_manhattan_distance)
-                        self.metrics_requires_prob.append(False)
 
                     elif sub_fun is 'ConcordanceCorrCoef':
                         # https://torchmetrics.readthedocs.io/en/stable/regression/concordance_corr_coef.html
                         self.metrics.append(tm.ConcordanceCorrCoef)
-                        self.metrics_requires_prob.append(False)
                     elif sub_fun is 'CosineSimilarity':
                         # https://torchmetrics.readthedocs.io/en/stable/regression/cosine_similarity.html
                         self.metrics.append(tm.CosineSimilarity)
-                        self.metrics_requires_prob.append(False)
                     ###############################################
                     elif sub_fun is 'Accuracy':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
-                        self.metrics.append(tm.Accuracy(num_classes=self.n_class))
-                        self.metrics_requires_prob.append(True)
+                        self.metrics.append(tm.Accuracy(task='multiclass',
+                                                        num_classes=self.n_class))
                     elif sub_fun is 'BinaryAccuracy':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
                         self.metrics.append(tm.classification.BinaryAccuracy)
-                        self.metrics_requires_prob.append(True)
-
+                    elif sub_fun is 'AUROC':
+                        # https://torchmetrics.readthedocs.io/en/stable/classification/auroc.html
+                        self.metrics.append(tm.AUROC(task='multiclass',num_classes=self.n_class))
+                    elif sub_fun is 'AUROC':
+                        # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
+                        self.metrics.append(tm.AUROC(task='multiclass',num_classes=self.n_class))
 
                 else:
                     raise ValueError('Please enter the list of metric functions correctly')
