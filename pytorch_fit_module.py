@@ -392,7 +392,15 @@ class CompatibilityCompiler:
                         # https://torchmetrics.readthedocs.io/en/stable/regression/cosine_similarity.html
                         self.metrics.append(tm.CosineSimilarity)
                         self.metrics_requires_prob.append(False)
-
+                    ###############################################
+                    elif sub_fun is 'Accuracy':
+                        # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
+                        self.metrics.append(tm.Accuracy(num_classes=self.n_class))
+                        self.metrics_requires_prob.append(True)
+                    elif sub_fun is 'BinaryAccuracy':
+                        # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
+                        self.metrics.append(tm.classification.BinaryAccuracy)
+                        self.metrics_requires_prob.append(True)
 
 
                 else:
