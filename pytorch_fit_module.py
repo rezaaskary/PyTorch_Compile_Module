@@ -330,10 +330,8 @@ class CompatibilityCompiler:
 
         elif isinstance(valid_split, tuple):
             tensordataset_valid = TensorDataset(pt.tensor(valid_split[0],
-                                                          dtype=self.dtype,
                                                           device=self.device),
                                                 pt.tensor(valid_split[1],
-                                                          dtype=self.dtype,
                                                           device=self.device)
                                                 )
 
