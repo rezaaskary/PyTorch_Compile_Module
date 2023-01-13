@@ -17,7 +17,8 @@ class CompatibilityCompiler:
                  random_seed: int = 42,
                  model: pt.Callable = None,
                  batch_sizes: int = None,
-                 n_batches: int = None
+                 n_batches: int = None,
+                 epochs: int = None
                  ):
         if isinstance(random_seed, int):
             pt.manual_seed(random_seed)
@@ -323,7 +324,6 @@ class CompatibilityCompiler:
         else:
             raise ValueError('Only tuple and DataLoader variables are supported!')
 
-
         if isinstance(valid_split, pt.utils.data.DataLoader):
             self.valid_split = valid_split
             self.valid_n_batches = len(self.valid_split)
@@ -349,8 +349,13 @@ class CompatibilityCompiler:
         else:
             raise ValueError('Only tuple and DataLoader variables are supported!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-
+        if isinstance(epochs, int):
+            self.epochs = epochs
+        elif not epochs:
+            self.epochs = 1000
+        else:
+            raise ValueError('The number of epochs is not specified correctly!')
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 class TrainPytorchNN(CompatibilityCompiler):
@@ -385,7 +390,6 @@ class TrainPytorchNN(CompatibilityCompiler):
         else:
             raise ValueError(f' {dtype} is not the correct type of variables in pytorch!')
 
-
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         if isinstance(n_class, int):
@@ -394,30 +398,6 @@ class TrainPytorchNN(CompatibilityCompiler):
             self.n_class = 2
         else:
             raise ValueError(f'{n_class} is not the correct value for the number of classes.')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-
-        if isinstance(loss_fcn, pt.Callable):
-            self.loss_fcn = loss_fcn
-        else:
-            raise ValueError('The pytorch loss function is not specified correctly!')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        if isinstance(optimizer, pt.Callable):
-            self.optimizer = optimizer
-        else:
-            raise ValueError('The pytorch optimizer function is not specified correctly!')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        if isinstance(epochs, int):
-            self.epochs = epochs
-        elif not epochs:
-            self.epochs = 1000
-        else:
-            raise ValueError('The number of epochs is not specified correctly!')
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-        self.optimizer = self.optimizer(lr=self.learning_rate,
-                                        params=self.model.parameters()
-                                        )
 
         if isinstance(verbose, bool):
             self.verbose = verbose
