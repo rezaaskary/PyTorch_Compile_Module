@@ -396,9 +396,9 @@ class CompatibilityCompiler:
                     elif sub_fun is 'AUROC':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/auroc.html
                         self.metrics.append(tm.AUROC(task='multiclass',num_classes=self.n_class))
-                    elif sub_fun is 'AUROC':
+                    elif sub_fun is 'BinaryAUROC':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
-                        self.metrics.append(tm.AUROC(task='multiclass',num_classes=self.n_class))
+                        self.metrics.append(tm.classification.BinaryAUROC)
 
                 else:
                     raise ValueError('Please enter the list of metric functions correctly')
