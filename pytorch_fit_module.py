@@ -401,9 +401,9 @@ class CompatibilityCompiler:
                     elif sub_fun is 'BinaryAUROC':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
                         self.metrics.append(tm.classification.BinaryAUROC)
-
                 else:
                     raise ValueError('Please enter the list of metric functions correctly')
+        self.num_metrics = len(self.metrics)
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if isinstance(verbose, bool):
             self.verbose = verbose
@@ -420,7 +420,7 @@ class TrainPytorchNN(CompatibilityCompiler):
                  valid_split: pt.utils.data.DataLoader = None,
                  n_class: int = None,
                  model: pt.Callable = None,
-                 loss: pt.Callable = None,
+                 loss: str = 'MSELoss',
                  metrics: list = None,
                  optimizer: str = 'Adam',
                  epochs: int = 1000,
@@ -451,20 +451,7 @@ class TrainPytorchNN(CompatibilityCompiler):
 
 
 
-        if isinstance(metrics, list):
-            for sub_fun in metrics:
-                if isinstance(sub_fun, pt.Callable):
-                    pass
-                else:
-                    raise ValueError('Please enter the list of metric functions correctly')
-            self.metrics = metrics
 
-        elif isinstance(metrics, pt.Callable):
-            self.metrics = [metrics]
-        else:
-            raise ValueError('Please enter the list of metric functions correctly')
-
-        self.num_metrics = len(self.metrics)
 
         def _metric_calculator(true_variables: pt.tensor, predicted_variable: pt.tensor,
                                index: int, previous_scores: list) -> list:
