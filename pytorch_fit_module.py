@@ -375,6 +375,12 @@ class CompatibilityCompiler:
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/euclidean_distance.html
                         self.metrics.append(tm.functional.pairwise_euclidean_distance)
                         self.metrics_requires_prob.append(False)
+                    elif sub_fun is 'pairwise_linear_similarity':
+                        # https://torchmetrics.readthedocs.io/en/stable/pairwise/linear_similarity.html
+                        self.metrics.append(tm.functional.pairwise_linear_similarity)
+                        self.metrics_requires_prob.append(False)
+
+
 
                 else:
                     raise ValueError('Please enter the list of metric functions correctly')
