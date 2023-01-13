@@ -11,6 +11,7 @@ class CompatibilityCompiler:
     def __init__(self,
                  train_split: pt.utils.data.DataLoader = None,
                  valid_split: pt.utils.data.DataLoader = None,
+                 verbose: bool = False,
                  n_class: int = None,
                  loss: str = 'MSELoss',
                  optimizer: str = 'Adam',
@@ -404,6 +405,13 @@ class CompatibilityCompiler:
                     raise ValueError('Please enter the list of metric functions correctly')
             self.metrics = metrics
 
+        if isinstance(verbose, bool):
+            self.verbose = verbose
+        elif not verbose:
+            self.verbose = False
+        else:
+            raise ValueError('Please correctly specify a boolean variable to activate/deactivae verbosity!')
+
 
 class TrainPytorchNN(CompatibilityCompiler):
     def __init__(self,
@@ -430,21 +438,7 @@ class TrainPytorchNN(CompatibilityCompiler):
                                              device=device,
                                              random_seed=random_seed, )
 
-        if dtype in [pt.float, pt.float16, pt.float32, pt.float64, pt.int32, pt.short, pt.long]:
-            self.dtype = dtype
-        elif not dtype:
-            self.dtype = pt.float32
-        else:
-            raise ValueError(f' {dtype} is not the correct type of variables in pytorch!')
 
-        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-        if isinstance(verbose, bool):
-            self.verbose = verbose
-        elif not verbose:
-            self.verbose = False
-        else:
-            raise ValueError('Please correctly specify a boolean variable to activate/deactivae verbosity!')
 
         if isinstance(metrics, list):
             for sub_fun in metrics:
