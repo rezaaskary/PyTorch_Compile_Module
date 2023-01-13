@@ -13,6 +13,7 @@ class CompatibilityCompiler:
                  n_class: int = None,
                  loss: str = 'MSELoss',
                  optimizer: str = 'Adam',
+                 metrics: str = None,
                  learning_rate: float = 0.01,
                  device: str = 'cpu',
                  random_seed: int = 42,
@@ -311,10 +312,8 @@ class CompatibilityCompiler:
 
         elif isinstance(train_split, tuple):
             tensordataset_train = TensorDataset(pt.tensor(train_split[0],
-                                                          dtype=self.dtype,
                                                           device=self.device),
                                                 pt.tensor(train_split[1],
-                                                          dtype=self.dtype,
                                                           device=self.device)
                                                 )
             self.train_split = DataLoader(dataset=tensordataset_train,
