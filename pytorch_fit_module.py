@@ -25,6 +25,10 @@ class CompatibilityCompiler:
                  n_batches: int = None,
                  epochs: int = None
                  ):
+
+        if isinstance(print_every, int):
+            self.print_every =
+
         if isinstance(random_seed, int):
             pt.manual_seed(random_seed)
             pt.cuda.manual_seed(random_seed)
@@ -326,7 +330,7 @@ class CompatibilityCompiler:
             self.train_n_batches = len(self.train_split)
         else:
             raise ValueError('Only tuple and DataLoader variables are supported!')
-
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if isinstance(valid_split, pt.utils.data.DataLoader):
             self.valid_split = valid_split
             self.valid_n_batches = len(self.valid_split)
@@ -380,7 +384,6 @@ class CompatibilityCompiler:
                     elif sub_fun is 'pairwise_manhattan_distance':
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/manhattan_distance.html
                         self.metrics.append(tm.functional.pairwise_manhattan_distance)
-
                     elif sub_fun is 'ConcordanceCorrCoef':
                         # https://torchmetrics.readthedocs.io/en/stable/regression/concordance_corr_coef.html
                         self.metrics.append(tm.ConcordanceCorrCoef)
@@ -439,7 +442,7 @@ class TrainPytorchNN(CompatibilityCompiler):
 
         def _metric_calculator(true_variables: pt.tensor, predicted_variable: pt.tensor,
                                index: int, previous_scores: list) -> list:
-            return [met(true_variables, predicted_variable) / (index + 1) + previous_scores[metric_ind] * \
+            return [met(predicted_variable, true_variables) / (index + 1) + previous_scores[metric_ind] * \
                     (index / (index + 1)) for metric_ind, met in enumerate(self.metrics)]
 
         def _class_calculator(predicted_probablities: pt.tensor) -> pt.tensor:
