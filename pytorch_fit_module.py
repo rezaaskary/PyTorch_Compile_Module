@@ -379,6 +379,15 @@ class CompatibilityCompiler:
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/linear_similarity.html
                         self.metrics.append(tm.functional.pairwise_linear_similarity)
                         self.metrics_requires_prob.append(False)
+                    elif sub_fun is 'pairwise_manhattan_distance':
+                        # https://torchmetrics.readthedocs.io/en/stable/pairwise/manhattan_distance.html
+                        self.metrics.append(tm.functional.pairwise_manhattan_distance)
+                        self.metrics_requires_prob.append(False)
+
+                    elif sub_fun is 'ConcordanceCorrCoef':
+                        # https://torchmetrics.readthedocs.io/en/stable/regression/concordance_corr_coef.html
+                        self.metrics.append(tm.ConcordanceCorrCoef)
+                        self.metrics_requires_prob.append(False)
 
 
 
