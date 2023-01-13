@@ -364,11 +364,17 @@ class CompatibilityCompiler:
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if isinstance(metrics, list):
             self.metrics = []
+            self.metrics_requires_prob = []
             for sub_fun in metrics:
                 if isinstance(sub_fun, str):
-                    if sub_fun is 'reza':
-                        self.metrics.append()
-
+                    if sub_fun is 'pairwise_cosine_similarity':
+                        # https://torchmetrics.readthedocs.io/en/stable/pairwise/cosine_similarity.html
+                        self.metrics.append(tm.functional.pairwise_cosine_similarity)
+                        self.metrics_requires_prob.append(False)
+                    elif sub_fun is 'pairwise_euclidean_distance':
+                        # https://torchmetrics.readthedocs.io/en/stable/pairwise/euclidean_distance.html
+                        self.metrics.append(tm.functional.pairwise_euclidean_distance)
+                        self.metrics_requires_prob.append(False)
 
                 else:
                     raise ValueError('Please enter the list of metric functions correctly')
