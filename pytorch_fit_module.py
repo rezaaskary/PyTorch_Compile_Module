@@ -12,6 +12,7 @@ class CompatibilityCompiler:
                  train_split: pt.utils.data.DataLoader = None,
                  valid_split: pt.utils.data.DataLoader = None,
                  verbose: bool = False,
+                 print_every: int = None,
                  n_class: int = None,
                  loss: str = 'MSELoss',
                  optimizer: str = 'Adam',
@@ -403,14 +404,14 @@ class CompatibilityCompiler:
 
                 else:
                     raise ValueError('Please enter the list of metric functions correctly')
-            self.metrics = metrics
-
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if isinstance(verbose, bool):
             self.verbose = verbose
         elif not verbose:
             self.verbose = False
         else:
             raise ValueError('Please correctly specify a boolean variable to activate/deactivae verbosity!')
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 class TrainPytorchNN(CompatibilityCompiler):
@@ -419,7 +420,7 @@ class TrainPytorchNN(CompatibilityCompiler):
                  valid_split: pt.utils.data.DataLoader = None,
                  n_class: int = None,
                  model: pt.Callable = None,
-                 loss_fcn: pt.Callable = None,
+                 loss: pt.Callable = None,
                  metrics: list = None,
                  optimizer: str = 'Adam',
                  epochs: int = 1000,
@@ -430,13 +431,23 @@ class TrainPytorchNN(CompatibilityCompiler):
                  device: str = 'cpu',
                  random_seed: int = 42,
                  print_every: int = None,
-                 dtype=None
                  ) -> None:
 
         super(self, TrainPytorchNN).__init__(optimizer=optimizer,
+                                             train_split=train_split,
+                                             valid_split=valid_split,
+                                             model=model,
+                                             loss=loss,
+                                             verbose=verbose,
+                                             n_class=n_class,
+                                             epochs=epochs,
+                                             batch_sizes=batch_sizes,
+                                             metrics=metrics,
+                                             n_batches=n_batches,
+                                             print_every=print_every,
                                              learning_rate=learning_rate,
                                              device=device,
-                                             random_seed=random_seed, )
+                                             random_seed=random_seed)
 
 
 
