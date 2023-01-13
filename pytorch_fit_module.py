@@ -10,6 +10,7 @@ class CompatibilityCompiler:
     def __init__(self,
                  train_split: pt.utils.data.DataLoader = None,
                  valid_split: pt.utils.data.DataLoader = None,
+                 n_class: int = None,
                  loss: str = 'MSELoss',
                  optimizer: str = 'Adam',
                  learning_rate: float = 0.01,
@@ -354,6 +355,12 @@ class CompatibilityCompiler:
         else:
             raise ValueError('The number of epochs is not specified correctly!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        if isinstance(n_class, int):
+            self.n_class = n_class
+        elif not n_class:
+            self.n_class = None
+        else:
+            raise ValueError(f'{n_class} is not the correct value for the number of classes.')
 
 
 class TrainPytorchNN(CompatibilityCompiler):
@@ -389,13 +396,6 @@ class TrainPytorchNN(CompatibilityCompiler):
             raise ValueError(f' {dtype} is not the correct type of variables in pytorch!')
 
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-        if isinstance(n_class, int):
-            self.n_class = n_class
-        elif not n_class:
-            self.n_class = 2
-        else:
-            raise ValueError(f'{n_class} is not the correct value for the number of classes.')
 
         if isinstance(verbose, bool):
             self.verbose = verbose
