@@ -1,6 +1,7 @@
 import torch as pt
 from tqdm import tqdm
 from torch import nn
+import torchmetrics as tm
 import functools
 import numpy as np
 from torch.utils.data import TensorDataset, DataLoader
@@ -362,10 +363,11 @@ class CompatibilityCompiler:
             raise ValueError(f'{n_class} is not the correct value for the number of classes.')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if isinstance(metrics, list):
+            self.metrics = []
             for sub_fun in metrics:
-                self.metrics = []
                 if isinstance(sub_fun, str):
-
+                    if sub_fun is 'reza':
+                        self.metrics.append()
 
 
                 else:
