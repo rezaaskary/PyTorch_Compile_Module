@@ -454,22 +454,31 @@ class TrainPytorchNN(CompatibilityCompiler):
                  n_batches: int = None, verbose: bool = True, device: str = 'cpu', random_seed: int = 42,
                  print_every: int = None) -> None:
         """
-
-        :param train_split:
-        :param valid_split:
-        :param n_class:
-        :param model:
-        :param loss:
-        :param metrics:
-        :param optimizer:
-        :param epochs:
-        :param learning_rate:
-        :param batch_sizes:
-        :param n_batches:
-        :param verbose:
-        :param device:
-        :param random_seed:
-        :param print_every:
+        A class used for checking the compatibility if the input variable
+        :param train_split: The training split in the format f either 'pt.utils.data.DataLoader' or a tuple of (x,y)
+        :param valid_split: The validation split in the format f either 'pt.utils.data.DataLoader' or a tuple of (x,y)
+        :param verbose: A boolean variable used to activate/deactivate the progress bar during training
+        :param print_every: Printing the metrics of the model during several iterations
+        :param n_class: The number of classes (only for the classification problem)
+        :param loss: The loss function used for the optimization. The supported loss functions are:[L1Loss, MSELoss,
+                     CrossEntropyLoss, CTCLoss, NLLLoss, PoissonNLLLoss, GaussianNLLLoss, KLDivLoss, BCELoss,
+                     BCEWithLogitsLoss, MarginRankingLoss, HingeEmbeddingLoss, MultiLabelMarginLoss, HuberLoss,
+                     SmoothL1Loss, SoftMarginLoss, MultiLabelSoftMarginLoss, CosineEmbeddingLoss, MultiMarginLoss,
+                     TripletMarginLoss, TripletMarginWithDistanceLoss]
+        :param optimizer: Different optimizer from torch.optim with their default hyperparameters were implemented here.
+                    The optimizers are [Adadelta, Adagrad, Adam, AdamW, SparseAdam, Adamax, ASGD, LBFGS, NAdam, RAdam,
+                    RMSprop, Rprop,SGD]
+        :param metrics: Several metrics from torchmetrics implemented for classification/regression problems. The
+                    available metrics are [pairwise_cosine_similarity, pairwise_euclidean_distance,
+                     pairwise_linear_similarity, pairwise_manhattan_distance, ConcordanceCorrCoef, CosineSimilarity,
+                     Accuracy, BinaryAccuracy, AUROC, BinaryAUROC]
+        :param learning_rate: A float value representative of the learning rate of the optimizer
+        :param device: The hardware device used for computation. available choices: [cpu, cuda]
+        :param random_seed: An integer used to fix random number generator. The default value is 42.
+        :param model: A python class specified with the model.
+        :param batch_sizes: The size of each batch of the data
+        :param n_batches: The numbrt of batches in the training split.
+        :param epochs: An integer value used as the max iterations.
         """
         super(TrainPytorchNN).__init__(optimizer=optimizer,
                                        train_split=train_split,
