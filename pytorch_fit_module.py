@@ -38,8 +38,9 @@ class CompatibilityCompiler:
                      SmoothL1Loss, SoftMarginLoss, MultiLabelSoftMarginLoss, CosineEmbeddingLoss, MultiMarginLoss,
                      TripletMarginLoss, TripletMarginWithDistanceLoss]
         :param optimizer: Different optimizer from torch.optim with their default hyperparameters were implemented here.
-                    The optimizers are [Adadelta, Adagrad, Adam, AdamW,SparseAdam]
-        :param metrics:
+                    The optimizers are [Adadelta, Adagrad, Adam, AdamW, SparseAdam, Adamax, ASGD, LBFGS, NAdam, RAdam,
+                    RMSprop, Rprop,SGD]
+        :param metrics: Several metrics from torchmetrics implemented for classification/regression problems.
         :param learning_rate:
         :param device:
         :param random_seed:
