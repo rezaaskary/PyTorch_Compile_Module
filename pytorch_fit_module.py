@@ -426,7 +426,24 @@ class TrainPytorchNN(CompatibilityCompiler):
                  optimizer: str = 'Adam', epochs: int = 1000, learning_rate: float = 1e-2, batch_sizes: int = None,
                  n_batches: int = None, verbose: bool = True, device: str = 'cpu', random_seed: int = 42,
                  print_every: int = None) -> None:
+        """
 
+        :param train_split:
+        :param valid_split:
+        :param n_class:
+        :param model:
+        :param loss:
+        :param metrics:
+        :param optimizer:
+        :param epochs:
+        :param learning_rate:
+        :param batch_sizes:
+        :param n_batches:
+        :param verbose:
+        :param device:
+        :param random_seed:
+        :param print_every:
+        """
         super(TrainPytorchNN).__init__(optimizer=optimizer,
                                        train_split=train_split,
                                        valid_split=valid_split,
