@@ -40,14 +40,17 @@ class CompatibilityCompiler:
         :param optimizer: Different optimizer from torch.optim with their default hyperparameters were implemented here.
                     The optimizers are [Adadelta, Adagrad, Adam, AdamW, SparseAdam, Adamax, ASGD, LBFGS, NAdam, RAdam,
                     RMSprop, Rprop,SGD]
-        :param metrics: Several metrics from torchmetrics implemented for classification/regression problems.
-        :param learning_rate:
-        :param device:
-        :param random_seed:
-        :param model:
-        :param batch_sizes:
-        :param n_batches:
-        :param epochs:
+        :param metrics: Several metrics from torchmetrics implemented for classification/regression problems. The
+                    available metrics are [pairwise_cosine_similarity, pairwise_euclidean_distance,
+                     pairwise_linear_similarity, pairwise_manhattan_distance, ConcordanceCorrCoef, CosineSimilarity,
+                     Accuracy, BinaryAccuracy, AUROC, BinaryAUROC]
+        :param learning_rate: A float value representative of the learning rate of the optimizer
+        :param device: The hardware device used for computation. available choices: [cpu, cuda]
+        :param random_seed: An integer used to fix random number generator. The default value is 42.
+        :param model: A python class specified with the model.
+        :param batch_sizes: The size of each batch of the data
+        :param n_batches: The numbrt of batches in the training split.
+        :param epochs: An integer value used as the max iterations.
         """
 
         if isinstance(random_seed, int):
