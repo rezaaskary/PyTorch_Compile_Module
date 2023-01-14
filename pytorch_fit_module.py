@@ -496,16 +496,20 @@ class TrainPytorchNN(CompatibilityCompiler):
                                        device=device,
                                        random_seed=random_seed)
 
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         def _metric_calculator(true_variables: pt.tensor, predicted_variable: pt.tensor,
                                index: int, previous_scores: list) -> list:
             return [met(predicted_variable, true_variables) / (index + 1) + previous_scores[metric_ind] * \
                     (index / (index + 1)) for metric_ind, met in enumerate(self.metrics)]
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         def _class_calculator(predicted_probablities: pt.tensor) -> pt.tensor:
             return pt.argmax(predicted_probablities, dim=1)
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         def _class_calculator_binary(predicted_probablities: pt.tensor) -> pt.tensor:
             return pt.round(predicted_probablities)
+        # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         self.metric_calculator = _metric_calculator
         if self.n_class == 2:
@@ -521,7 +525,7 @@ class TrainPytorchNN(CompatibilityCompiler):
                 for batch_index, (x_mini_train, y_mini_train) in enumerate(self.train_split):
                     self.model.train()
                     y_train_pred_prob = self.model(x_mini_train)
-                    train_loss_value = self.loss_fcn(y_train_pred_prob, y_mini_train)
+                    train_loss_value = self.loss(y_train_pred_prob, y_mini_train)
                     y_train_pred_label = self.prob2label(y_train_pred_prob)
                     train_metrics = self.metric_calculator(y_train_pred_prob, y_mini_train,
                                                            batch_index, train_metrics)
@@ -536,7 +540,7 @@ class TrainPytorchNN(CompatibilityCompiler):
                 with pt.inference_mode():
                     for batch_index_valid, (x_mini_valid, y_mini_valid) in enumerate(self.valid_split):
                         y_valid_pred_prob = self.model(x_mini_valid)
-                        valid_loss_value = self.loss_fcn(y_valid_pred_prob, y_mini_valid)
+                        valid_loss_value = self.loss(y_valid_pred_prob, y_mini_valid)
                         # %%                    y_train_pred_label = self.prob2label(y_valid_pred_prob)
                         valid_loss += valid_loss_value
                         valid_metrics = self.metric_calculator(y_valid_pred_prob, y_mini_valid,
