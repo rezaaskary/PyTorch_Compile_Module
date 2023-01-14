@@ -29,10 +29,11 @@ class CompatibilityCompiler:
         A class used for checking the compatibility if the input variable
         :param train_split: The training split in the format f either 'pt.utils.data.DataLoader' or a tuple of (x,y)
         :param valid_split: The validation split in the format f either 'pt.utils.data.DataLoader' or a tuple of (x,y)
-        :param verbose:
-        :param print_every:
-        :param n_class:
-        :param loss:
+        :param verbose: A boolean variable used to activate/deactivate the progress bar during training
+        :param print_every: Printing the metrics of the model during several iterations
+        :param n_class: The number of classes (only for the classification problem)
+        :param loss: The loss function used for the optimization. The supported loss functions are:[L1Loss, MSELoss,
+         CrossEntropyLoss, CTCLoss]
         :param optimizer:
         :param metrics:
         :param learning_rate:
