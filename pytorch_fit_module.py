@@ -414,8 +414,10 @@ class CompatibilityCompiler:
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if isinstance(print_every, int):
             self.print_every = max([print_every, self.batch_sizes])
+        elif not print_every:
+            self.print_every = self.batch_sizes
         else:
-            raise Exception('')
+            raise Exception('Please correctly specify an integer value to visualize the results.')
 
 
 class TrainPytorchNN(CompatibilityCompiler):
