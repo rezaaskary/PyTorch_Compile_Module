@@ -26,8 +26,6 @@ class CompatibilityCompiler:
                  epochs: int = None
                  ):
 
-
-
         if isinstance(random_seed, int):
             pt.manual_seed(random_seed)
             pt.cuda.manual_seed(random_seed)
@@ -418,6 +416,7 @@ class CompatibilityCompiler:
             self.print_every = max([print_every, self.batch_sizes])
         else:
             raise Exception('')
+
 
 class TrainPytorchNN(CompatibilityCompiler):
     def __init__(self, train_split: pt.utils.data.DataLoader = None, valid_split: pt.utils.data.DataLoader = None,
