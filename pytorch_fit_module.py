@@ -25,6 +25,24 @@ class CompatibilityCompiler:
                  n_batches: int = None,
                  epochs: int = None
                  ):
+        """
+        A class used for checking the compatibility if the input variable
+        :param train_split: The training split in the format f either 'pt.utils.data.DataLoader' or a tuple of (x,y)
+        :param valid_split: The validation split in the format f either 'pt.utils.data.DataLoader' or a tuple of (x,y)
+        :param verbose:
+        :param print_every:
+        :param n_class:
+        :param loss:
+        :param optimizer:
+        :param metrics:
+        :param learning_rate:
+        :param device:
+        :param random_seed:
+        :param model:
+        :param batch_sizes:
+        :param n_batches:
+        :param epochs:
+        """
 
         if isinstance(random_seed, int):
             pt.manual_seed(random_seed)
