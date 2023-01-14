@@ -33,8 +33,12 @@ class CompatibilityCompiler:
         :param print_every: Printing the metrics of the model during several iterations
         :param n_class: The number of classes (only for the classification problem)
         :param loss: The loss function used for the optimization. The supported loss functions are:[L1Loss, MSELoss,
-         CrossEntropyLoss, CTCLoss]
-        :param optimizer:
+                     CrossEntropyLoss, CTCLoss, NLLLoss, PoissonNLLLoss, GaussianNLLLoss, KLDivLoss, BCELoss,
+                     BCEWithLogitsLoss, MarginRankingLoss, HingeEmbeddingLoss, MultiLabelMarginLoss, HuberLoss,
+                     SmoothL1Loss, SoftMarginLoss, MultiLabelSoftMarginLoss, CosineEmbeddingLoss, MultiMarginLoss,
+                     TripletMarginLoss, TripletMarginWithDistanceLoss]
+        :param optimizer: Different optimizer from torch.optim with their default hyperparameters were implemented here.
+                    The optimizers are [Adadelta, Adagrad, Adam, AdamW,SparseAdam]
         :param metrics:
         :param learning_rate:
         :param device:
