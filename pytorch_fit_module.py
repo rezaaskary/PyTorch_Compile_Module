@@ -226,7 +226,7 @@ class CompatibilityCompiler:
                                                    eps=1e-6,
                                                    weight_decay=0
                                                    )
-            elif optimizer is 'Adagrad':
+            elif optimizer == 'Adagrad':
                 # https://pytorch.org/docs/stable/generated/torch.optim.Adagrad.html#torch.optim.Adagrad
                 self.optimizer = pt.optim.Adagrad(params=self.model.parameters(),
                                                   lr=self.learning_rate,
@@ -252,21 +252,21 @@ class CompatibilityCompiler:
                                                 weight_decay=0,
                                                 amsgrad=False
                                                 )
-            elif optimizer is 'SparseAdam':
+            elif optimizer == 'SparseAdam':
                 # https://pytorch.org/docs/stable/generated/torch.optim.SparseAdam.html#torch.optim.SparseAdam
                 self.optimizer = pt.optim.SparseAdam(params=self.model.parameters(),
                                                      lr=self.learning_rate,
                                                      betas=(0.9, 0.99),
                                                      eps=1e-9
                                                      )
-            elif optimizer is 'Adamax':
+            elif optimizer == 'Adamax':
                 # https://pytorch.org/docs/stable/generated/torch.optim.Adamax.html#torch.optim.Adamax
                 self.optimizer = pt.optim.Adamax(params=self.model.parameters(),
                                                  lr=self.learning_rate,
                                                  betas=(0.9, 0.99),
                                                  eps=1e-9
                                                  )
-            elif optimizer is 'ASGD':
+            elif optimizer == 'ASGD':
                 # https://pytorch.org/docs/stable/generated/torch.optim.ASGD.html#torch.optim.ASGD
                 self.optimizer = pt.optim.ASGD(params=self.model.parameters(),
                                                lr=self.learning_rate,
@@ -275,7 +275,7 @@ class CompatibilityCompiler:
                                                t0=1e6,
                                                weight_decay=0
                                                )
-            elif optimizer is 'LBFGS':
+            elif optimizer == 'LBFGS':
                 # https://pytorch.org/docs/stable/generated/torch.optim.LBFGS.html#torch.optim.LBFGS
                 self.optimizer = pt.optim.LBFGS(params=self.model.parameters(),
                                                 lr=self.learning_rate,
@@ -286,7 +286,7 @@ class CompatibilityCompiler:
                                                 history_size=100,
                                                 line_search_fn=None
                                                 )
-            elif optimizer is 'NAdam':
+            elif optimizer == 'NAdam':
                 # https://pytorch.org/docs/stable/generated/torch.optim.NAdam.html#torch.optim.NAdam
                 self.optimizer = pt.optim.NAdam(params=self.model.parameters(),
                                                 lr=self.learning_rate,
@@ -295,7 +295,7 @@ class CompatibilityCompiler:
                                                 weight_decay=0,
                                                 momentum_decay=0.004
                                                 )
-            elif optimizer is 'RAdam':
+            elif optimizer == 'RAdam':
                 # https://pytorch.org/docs/stable/generated/torch.optim.RAdam.html#torch.optim.RAdam
                 self.optimizer = pt.optim.RAdam(params=self.model.parameters(),
                                                 lr=self.learning_rate,
@@ -303,7 +303,7 @@ class CompatibilityCompiler:
                                                 eps=1e-9,
                                                 weight_decay=0,
                                                 )
-            elif optimizer is 'RMSprop':
+            elif optimizer == 'RMSprop':
                 # https://pytorch.org/docs/stable/generated/torch.optim.RMSprop.html#torch.optim.RMSprop
                 self.optimizer = pt.optim.RMSprop(params=self.model.parameters(),
                                                   lr=self.learning_rate,
@@ -313,14 +313,14 @@ class CompatibilityCompiler:
                                                   momentum=0,
                                                   centered=False
                                                   )
-            elif optimizer is 'Rprop':
+            elif optimizer == 'Rprop':
                 # https://pytorch.org/docs/stable/generated/torch.optim.Rprop.html#torch.optim.Rprop
                 self.optimizer = pt.optim.Rprop(params=self.model.parameters(),
                                                 lr=self.learning_rate,
                                                 etas=(0.5, 1.2),
                                                 step_sizes=(1e-6, 50),
                                                 )
-            elif optimizer is 'SGD':
+            elif optimizer == 'SGD':
                 # https://pytorch.org/docs/stable/generated/torch.optim.SGD.html#torch.optim.SGD
                 self.optimizer = pt.optim.SGD(params=self.model.parameters(),
                                               lr=self.learning_rate,
