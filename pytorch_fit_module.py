@@ -480,24 +480,24 @@ class TrainPytorchNN(CompatibilityCompiler):
         :param n_batches: The numbrt of batches in the training split.
         :param epochs: An integer value used as the max iterations.
         """
-        super(TrainPytorchNN).__init__(optimizer=optimizer,
-                                       train_split=train_split,
-                                       valid_split=valid_split,
-                                       model=model,
-                                       loss=loss,
-                                       verbose=verbose,
-                                       n_class=n_class,
-                                       epochs=epochs,
-                                       batch_sizes=batch_sizes,
-                                       metrics=metrics,
-                                       n_batches=n_batches,
-                                       print_every=print_every,
-                                       learning_rate=learning_rate,
-                                       device=device,
-                                       random_seed=random_seed)
+        super(self, TrainPytorchNN).__init__(optimizer=optimizer,
+                                             train_split=train_split,
+                                             valid_split=valid_split,
+                                             model=model,
+                                             loss=loss,
+                                             verbose=verbose,
+                                             n_class=n_class,
+                                             epochs=epochs,
+                                             batch_sizes=batch_sizes,
+                                             metrics=metrics,
+                                             n_batches=n_batches,
+                                             print_every=print_every,
+                                             learning_rate=learning_rate,
+                                             device=device,
+                                             random_seed=random_seed)
 
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        def _metric_calculator(predicted_variable: pt.tensor,true_variables: pt.tensor,
+        def _metric_calculator(predicted_variable: pt.tensor, true_variables: pt.tensor,
                                index: int, previous_scores: list) -> list:
             """
 
@@ -509,14 +509,17 @@ class TrainPytorchNN(CompatibilityCompiler):
             """
             return [met(predicted_variable, true_variables) / (index + 1) + previous_scores[metric_ind] * \
                     (index / (index + 1)) for metric_ind, met in enumerate(self.metrics)]
+
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         def _class_calculator(predicted_probablities: pt.tensor) -> pt.tensor:
             return pt.argmax(predicted_probablities, dim=1)
+
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         def _class_calculator_binary(predicted_probablities: pt.tensor) -> pt.tensor:
             return pt.round(predicted_probablities)
+
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         self.metric_calculator = _metric_calculator
