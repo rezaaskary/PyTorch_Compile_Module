@@ -497,8 +497,16 @@ class TrainPytorchNN(CompatibilityCompiler):
                                        random_seed=random_seed)
 
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        def _metric_calculator(true_variables: pt.tensor, predicted_variable: pt.tensor,
+        def _metric_calculator(predicted_variable: pt.tensor,true_variables: pt.tensor,
                                index: int, previous_scores: list) -> list:
+            """
+
+            :param true_variables:
+            :param predicted_variable:
+            :param index:
+            :param previous_scores:
+            :return:
+            """
             return [met(predicted_variable, true_variables) / (index + 1) + previous_scores[metric_ind] * \
                     (index / (index + 1)) for metric_ind, met in enumerate(self.metrics)]
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
