@@ -56,3 +56,4 @@ pfm.TrainPytorchNN(train_split=(X_train, y_train),
                    verbose=True, epochs=500, batch_sizes=15, n_batches=10, device='cpu', optimizer='Adam',
                    random_seed=42, print_every=500, learning_rate=0.01,
                    )
+

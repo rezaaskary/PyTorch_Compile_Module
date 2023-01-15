@@ -99,113 +99,113 @@ class CompatibilityCompiler:
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         if isinstance(loss, str):
-            if loss is 'L1Loss':
+            if loss == 'L1Loss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.L1Loss.html#torch.nn.L1Loss
                 self.loss = nn.L1Loss(reduction='mean')
 
-            elif loss is 'MSELoss':
+            elif loss == 'MSELoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html#torch.nn.MSELoss
                 self.optimizer = nn.MSELoss(reduction='mean')
 
-            elif loss is 'CrossEntropyLoss':
+            elif loss == 'CrossEntropyLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html#torch.nn.CrossEntropyLoss
                 # logits are the input of the loss function
                 self.loss = nn.CrossEntropyLoss(weight=None,
                                                 reduction='mean',
                                                 ignore_index=-100,
                                                 label_smoothing=0)
-            elif loss is 'CTCLoss':
+            elif loss == 'CTCLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.CTCLoss.html#torch.nn.CTCLoss
                 self.loss = nn.CTCLoss(blank=0,
                                        reduction='mean',
                                        zero_infinity=False)
 
-            elif loss is 'NLLLoss':
+            elif loss == 'NLLLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss
                 self.optimizer = nn.NLLLoss(weight=None,
                                             ignore_index=-100,
                                             reduction='mean'
                                             )
-            elif loss is 'PoissonNLLLoss':
+            elif loss == 'PoissonNLLLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.PoissonNLLLoss.html#torch.nn.PoissonNLLLoss
                 self.optimizer = nn.PoissonNLLLoss(log_input=True,
                                                    full=False,
                                                    reduction='mean'
                                                    )
-            elif loss is 'GaussianNLLLoss':
+            elif loss == 'GaussianNLLLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.GaussianNLLLoss.html#torch.nn.GaussianNLLLoss
                 self.optimizer = nn.GaussianNLLLoss(full=False,
                                                     reduction='mean',
                                                     eps=1e-6
                                                     )
-            elif loss is 'KLDivLoss':
+            elif loss == 'KLDivLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.KLDivLoss.html#torch.nn.KLDivLoss
                 self.loss = nn.KLDivLoss(reduction='mean',
                                          log_target=False)
 
-            elif loss is 'BCELoss':
+            elif loss == 'BCELoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.BCELoss.html#torch.nn.BCELoss
                 self.loss = nn.BCELoss(weight=None,
                                        reduction='mean')
-            elif loss is 'BCEWithLogitsLoss':
+            elif loss == 'BCEWithLogitsLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html#torch.nn.BCEWithLogitsLoss
                 self.loss = nn.BCEWithLogitsLoss(weight=None,
                                                  reduction='mean',
                                                  pos_weight=None
                                                  )
-            elif loss is 'MarginRankingLoss':
+            elif loss == 'MarginRankingLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.MarginRankingLoss.html#torch.nn.MarginRankingLoss
                 self.loss = nn.MarginRankingLoss(margin=0,
                                                  reduction='mean'
                                                  )
-            elif loss is 'HingeEmbeddingLoss':
+            elif loss == 'HingeEmbeddingLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.HingeEmbeddingLoss.html#torch.nn.HingeEmbeddingLoss
                 self.loss = nn.HingeEmbeddingLoss(margin=1.0,
                                                   reduction='mean'
                                                   )
-            elif loss is 'MultiLabelMarginLoss':
+            elif loss == 'MultiLabelMarginLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.MultiLabelMarginLoss.html#torch.nn.MultiLabelMarginLoss
                 self.loss = nn.MultiLabelMarginLoss(reduction='mean')
 
-            elif loss is 'HuberLoss':
+            elif loss == 'HuberLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html#torch.nn.HuberLoss
                 self.loss = nn.HuberLoss(reduction='mean',
                                          delta=1.0
                                          )
-            elif loss is 'SmoothL1Loss':
+            elif loss == 'SmoothL1Loss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.SmoothL1Loss.html#torch.nn.SmoothL1Loss
                 self.loss = nn.SmoothL1Loss(reduction='mean',
                                             beta=1.0
                                             )
-            elif loss is 'SoftMarginLoss':
+            elif loss == 'SoftMarginLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.SoftMarginLoss.html#torch.nn.SoftMarginLoss
                 self.optimizer = nn.SoftMarginLoss(reduction='mean')
 
-            elif loss is 'MultiLabelSoftMarginLoss':
+            elif loss == 'MultiLabelSoftMarginLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.MultiLabelSoftMarginLoss.html#torch.nn.MultiLabelSoftMarginLoss
                 self.optimizer = nn.MultiLabelSoftMarginLoss(weight=None,
                                                              reduction='mean'
                                                              )
-            elif loss is 'CosineEmbeddingLoss':
+            elif loss == 'CosineEmbeddingLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.CosineEmbeddingLoss.html#torch.nn.CosineEmbeddingLoss
                 self.optimizer = nn.CosineEmbeddingLoss(reduction='mean',
                                                         margin=0
                                                         )
-            elif loss is 'MultiMarginLoss':
+            elif loss == 'MultiMarginLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.MultiMarginLoss.html#torch.nn.MultiMarginLoss
                 self.optimizer = nn.MultiMarginLoss(p=1,
                                                     margin=1.0,
                                                     weight=None,
                                                     reduction='mean'
                                                     )
-            elif loss is 'TripletMarginLoss':
+            elif loss == 'TripletMarginLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.TripletMarginLoss.html#torch.nn.TripletMarginLoss
                 self.optimizer = nn.TripletMarginLoss(margin=1.0,
                                                       p=2,
                                                       eps=1e-6,
                                                       reduction='mean')
 
-            elif loss is 'TripletMarginWithDistanceLoss':
+            elif loss == 'TripletMarginWithDistanceLoss':
                 # https://pytorch.org/docs/stable/generated/torch.nn.TripletMarginWithDistanceLoss.html#torch.nn.TripletMarginWithDistanceLoss
                 self.optimizer = nn.TripletMarginWithDistanceLoss(distance_function=None,
                                                                   margin=1.0,
@@ -214,12 +214,11 @@ class CompatibilityCompiler:
 
             else:
                 raise ValueError('The specified loss function is not implemented!')
-
         else:
             raise Exception('Please n')
 
         if isinstance(optimizer, str):
-            if optimizer is 'Adadelta':
+            if optimizer == 'Adadelta':
                 # https://pytorch.org/docs/stable/generated/torch.optim.Adadelta.html#torch.optim.Adadelta
                 self.optimizer = pt.optim.Adadelta(params=self.model.parameters(),
                                                    lr=self.learning_rate,
@@ -235,7 +234,7 @@ class CompatibilityCompiler:
                                                   weight_decay=0,
                                                   eps=1e-10
                                                   )
-            elif optimizer is 'Adam':
+            elif optimizer == 'Adam':
                 # https://pytorch.org/docs/stable/generated/torch.optim.Adam.html#torch.optim.Adam
                 self.optimizer = pt.optim.Adam(params=self.model.parameters(),
                                                lr=self.learning_rate,
@@ -244,7 +243,7 @@ class CompatibilityCompiler:
                                                weight_decay=0,
                                                amsgrad=False
                                                )
-            elif optimizer is 'AdamW':
+            elif optimizer == 'AdamW':
                 # https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html#torch.optim.AdamW
                 self.optimizer = pt.optim.AdamW(params=self.model.parameters(),
                                                 lr=self.learning_rate,
@@ -480,7 +479,7 @@ class TrainPytorchNN(CompatibilityCompiler):
         :param n_batches: The numbrt of batches in the training split.
         :param epochs: An integer value used as the max iterations.
         """
-        super(self, TrainPytorchNN).__init__(optimizer=optimizer,
+        super(TrainPytorchNN, self).__init__(optimizer=optimizer,
                                              train_split=train_split,
                                              valid_split=valid_split,
                                              model=model,
