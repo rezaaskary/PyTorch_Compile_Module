@@ -58,7 +58,9 @@ class CompatibilityCompiler:
             pt.cuda.manual_seed(random_seed)
             self.random_seed = random_seed
         elif not random_seed:
-            pass
+            pt.manual_seed(42)
+            pt.cuda.manual_seed(42)
+            self.random_seed = 42
         else:
             raise Exception(f'{random_seed} is not a correct value of random seed')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
