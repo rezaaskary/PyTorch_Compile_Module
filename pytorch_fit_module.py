@@ -395,36 +395,36 @@ class CompatibilityCompiler:
             self.metrics = []
             for sub_fun in metrics:
                 if isinstance(sub_fun, str):
-                    if sub_fun is 'pairwise_cosine_similarity':
+                    if sub_fun == 'pairwise_cosine_similarity':
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/cosine_similarity.html
                         self.metrics.append(tm.functional.pairwise_cosine_similarity)
-                    elif sub_fun is 'pairwise_euclidean_distance':
+                    elif sub_fun == 'pairwise_euclidean_distance':
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/euclidean_distance.html
                         self.metrics.append(tm.functional.pairwise_euclidean_distance)
-                    elif sub_fun is 'pairwise_linear_similarity':
+                    elif sub_fun == 'pairwise_linear_similarity':
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/linear_similarity.html
                         self.metrics.append(tm.functional.pairwise_linear_similarity)
-                    elif sub_fun is 'pairwise_manhattan_distance':
+                    elif sub_fun == 'pairwise_manhattan_distance':
                         # https://torchmetrics.readthedocs.io/en/stable/pairwise/manhattan_distance.html
                         self.metrics.append(tm.functional.pairwise_manhattan_distance)
-                    elif sub_fun is 'ConcordanceCorrCoef':
+                    elif sub_fun == 'ConcordanceCorrCoef':
                         # https://torchmetrics.readthedocs.io/en/stable/regression/concordance_corr_coef.html
                         self.metrics.append(tm.ConcordanceCorrCoef)
-                    elif sub_fun is 'CosineSimilarity':
+                    elif sub_fun == 'CosineSimilarity':
                         # https://torchmetrics.readthedocs.io/en/stable/regression/cosine_similarity.html
                         self.metrics.append(tm.CosineSimilarity)
                     ###############################################
-                    elif sub_fun is 'Accuracy':
+                    elif sub_fun == 'Accuracy':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
                         self.metrics.append(tm.Accuracy(task='multiclass',
                                                         num_classes=self.n_class))
-                    elif sub_fun is 'BinaryAccuracy':
+                    elif sub_fun == 'BinaryAccuracy':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
                         self.metrics.append(tm.classification.BinaryAccuracy)
-                    elif sub_fun is 'AUROC':
+                    elif sub_fun == 'AUROC':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/auroc.html
                         self.metrics.append(tm.AUROC(task='multiclass', num_classes=self.n_class))
-                    elif sub_fun is 'BinaryAUROC':
+                    elif sub_fun == 'BinaryAUROC':
                         # https://torchmetrics.readthedocs.io/en/stable/classification/accuracy.html
                         self.metrics.append(tm.classification.BinaryAUROC)
                 else:
