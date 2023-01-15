@@ -58,9 +58,7 @@ class CompatibilityCompiler:
             pt.cuda.manual_seed(random_seed)
             self.random_seed = random_seed
         elif not random_seed:
-            pt.manual_seed(42)
-            pt.cuda.manual_seed(42)
-            self.random_seed = 42
+            pass
         else:
             raise Exception(f'{random_seed} is not a correct value of random seed')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -341,7 +339,8 @@ class CompatibilityCompiler:
         if isinstance(train_split, pt.utils.data.DataLoader):
             self.train_split = train_split
             self.train_n_batches = len(self.train_split)
-
+            self.batch_sizes = self.train_split.batch_size
+            self.total_train_size = len(self.train_split.dataset)
         elif isinstance(train_split, tuple):
             tensordataset_train = TensorDataset(pt.tensor(train_split[0],
                                                           device=self.device),
