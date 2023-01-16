@@ -20,11 +20,11 @@ x_pt = pt.tensor(x, device='cpu', dtype=pt.float32)
 y_pt = pt.tensor(y, device='cpu', dtype=pt.float32)
 
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=1990)
-X_train = pt.tensor(X_train, device='cpu', dtype=pt.float32)
-X_test = pt.tensor(X_test, device='cpu', dtype=pt.float32)
-
-y_train = pt.tensor(y_train, device='cpu', dtype=pt.float32)
-y_test = pt.tensor(y_test, device='cpu', dtype=pt.float32)
+# X_train = pt.tensor(X_train, device='cpu', dtype=pt.float32)
+# X_test = pt.tensor(X_test, device='cpu', dtype=pt.float32)
+#
+# y_train = pt.tensor(y_train, device='cpu', dtype=pt.float32)
+# y_test = pt.tensor(y_test, device='cpu', dtype=pt.float32)
 
 
 class Circlemodelv1(nn.Module):

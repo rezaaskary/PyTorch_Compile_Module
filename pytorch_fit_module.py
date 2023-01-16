@@ -342,6 +342,7 @@ class CompatibilityCompiler:
             self.batch_sizes = self.train_split.batch_size
             self.total_train_size = len(self.train_split.dataset)
         elif isinstance(train_split, tuple):
+            self.total_validation_size = len(train_split[1])
             tensordataset_train = TensorDataset(pt.tensor(train_split[0],
                                                           device=self.device),
                                                 pt.tensor(train_split[1],
@@ -352,6 +353,7 @@ class CompatibilityCompiler:
                                           batch_size=self.batch_sizes
                                           )
             self.train_n_batches = len(self.train_split)
+
         else:
             raise ValueError('Only tuple and DataLoader variables are supported!')
         # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
