@@ -342,7 +342,7 @@ class CompatibilityCompiler:
             self.batch_sizes = self.train_split.batch_size
             self.total_train_size = len(self.train_split.dataset)
         elif isinstance(train_split, tuple):
-            self.total_validation_size = len(train_split[1])
+            self.total_train_size = len(train_split[1])
             tensordataset_train = TensorDataset(pt.tensor(train_split[0],
                                                           device=self.device),
                                                 pt.tensor(train_split[1],
@@ -360,8 +360,9 @@ class CompatibilityCompiler:
         if isinstance(valid_split, pt.utils.data.DataLoader):
             self.valid_split = valid_split
             self.valid_n_batches = len(self.valid_split)
-
+            self.total_train_size = len(self.valid_split.dataset)
         elif isinstance(valid_split, tuple):
+            self.total_validation_size = len(valid_split[1])
             tensordataset_valid = TensorDataset(pt.tensor(valid_split[0],
                                                           device=self.device),
                                                 pt.tensor(valid_split[1],
