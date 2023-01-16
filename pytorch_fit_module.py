@@ -559,3 +559,6 @@ class TrainPytorchNN(CompatibilityCompiler):
                         valid_loss += valid_loss_value
                         valid_metrics = self.metric_calculator(y_valid_pred_prob, y_mini_valid,
                                                                batch_index_valid, valid_metrics)
+        self._model_run_ = _model_run_
+    def run(self):
+        self._model_run_()
